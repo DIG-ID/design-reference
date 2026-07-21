@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Reference — Spacing & Type Scale</title>
+<style>
+  :root{
+    --bg:#f7f7f8;
+    --surface:#ffffff;
+    --border:#e4e4e9;
+    --border-strong:#d0d0d8;
+    --text:#17171c;
+    --text-2:#5c5c66;
+    --text-3:#9a9aa4;
+    --accent:#2b4bd7;
+    --accent-soft:#eef1fd;
+    --mono:ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --radius:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px}
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+
+  /* ---------- Top bar / tabs ---------- */
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar{
+    max-width:1400px;margin:0 auto;
+    display:flex;align-items:center;gap:32px;
+    padding:0 24px;height:56px;
+  }
+  .brand{font-weight:700;font-size:.95rem;letter-spacing:-.01em;white-space:nowrap}
+  .brand span{color:var(--text-3);font-weight:500}
+  nav{display:flex;gap:4px;height:100%}
+  .tab-btn{
+    appearance:none;border:none;background:none;cursor:pointer;
+    font:inherit;font-size:.9rem;font-weight:500;color:var(--text-2);
+    padding:0 16px;height:100%;position:relative;
+  }
+  .tab-btn:hover{color:var(--text)}
+  .tab-btn.active{color:var(--text);font-weight:600}
+  .tab-btn.active::after{
+    content:"";position:absolute;left:12px;right:12px;bottom:-1px;
+    height:2px;background:var(--accent);border-radius:2px 2px 0 0;
+  }
+  .tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:6px}
+
+  main{max-width:1400px;margin:0 auto;padding:24px}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ---------- Shared layout: sidebar + content ---------- */
+  .tool{
+    display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;
+  }
+  .sidebar{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px;position:sticky;top:80px;
+  }
+  .sidebar h2{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:16px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.8rem;font-weight:500;color:var(--text-2);margin-bottom:5px}
+  .field input[type=text],.field input[type=number],.field select{
+    width:100%;padding:8px 10px;font:inherit;font-size:.875rem;
+    border:1px solid var(--border-strong);border-radius:6px;background:#fff;color:var(--text);
+  }
+  .field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
+  .field .hint{font-size:.72rem;color:var(--text-3);margin-top:4px}
+  .divider{height:1px;background:var(--border);margin:18px 0}
+
+  .seg{
+    display:flex;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:3px;gap:2px;
+  }
+  .seg button{
+    flex:1;appearance:none;border:none;background:none;cursor:pointer;
+    font:inherit;font-size:.8rem;font-weight:600;color:var(--text-2);
+    padding:6px 4px;border-radius:5px;
+  }
+  .seg button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+  .btn{
+    appearance:none;border:1px solid var(--border-strong);background:var(--surface);
+    font:inherit;font-size:.82rem;font-weight:600;color:var(--text);
+    padding:8px 14px;border-radius:7px;cursor:pointer;width:100%;
+  }
+  .btn:hover{border-color:var(--text-3)}
+  .btn.primary{background:var(--text);border-color:var(--text);color:#fff}
+  .btn.primary:hover{background:#000}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .content{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .content-head{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:14px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;
+  }
+  .content-head h3{font-size:.95rem;font-weight:650}
+  .content-head .sub{font-size:.78rem;color:var(--text-3);font-weight:400;margin-top:2px}
+
+  /* ---------- Spacing table ---------- */
+  .sp-table{width:100%;border-collapse:collapse}
+  .sp-table th{
+    text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--text-3);padding:10px 12px;border-bottom:1px solid var(--border);
+    background:#fbfbfc;position:sticky;top:56px;z-index:10;
+  }
+  .sp-table td{
+    padding:8px 12px;border-bottom:1px solid var(--border);
+    font-size:.85rem;vertical-align:middle;
+  }
+  .sp-table tr:last-child td{border-bottom:none}
+  .sp-table tr.sp-row{cursor:pointer}
+  .sp-table tr.sp-row:hover{background:var(--accent-soft)}
+  .sp-table tr.milestone td{background:#fbfbfc}
+  .sp-table tr.milestone:hover td{background:var(--accent-soft)}
+  td.mono,th.num{font-family:var(--mono)}
+  td.mono{font-size:.8rem;color:var(--text-2);white-space:nowrap}
+  td.mono b{color:var(--text);font-weight:600}
+  .token{
+    font-family:var(--mono);font-size:.75rem;font-weight:600;
+    background:var(--bg);border:1px solid var(--border);border-radius:5px;
+    padding:2px 7px;color:var(--text-2);white-space:nowrap;
+  }
+  .mult{font-family:var(--mono);font-size:.75rem;color:var(--text-3);white-space:nowrap}
+  .bar-cell{width:45%}
+  .bar{
+    height:14px;background:var(--accent);border-radius:3px;min-width:2px;
+    opacity:.85;
+  }
+  .bar-wrap{display:flex;align-items:center;gap:8px}
+  .square{
+    background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:3px;flex:none;
+  }
+  .copied-flash{animation:flash .6s ease}
+  @keyframes flash{0%{background:#dcfce7}100%{background:transparent}}
+
+  /* ---------- Type scale ---------- */
+  .ts-rows{padding:8px 0}
+  .ts-row{
+    display:flex;align-items:baseline;gap:20px;
+    padding:10px 20px;border-bottom:1px solid #f0f0f3;
+  }
+  .ts-row:last-child{border-bottom:none}
+  .ts-row:hover{background:#fbfbfc}
+  .ts-meta{
+    flex:none;width:150px;text-align:right;
+    font-family:var(--mono);font-size:.75rem;color:var(--text-3);
+    display:flex;justify-content:flex-end;align-items:baseline;gap:10px;
+    cursor:pointer;user-select:none;
+  }
+  .ts-meta:hover .ts-size{color:var(--accent)}
+  .ts-tag{font-weight:700;color:var(--text-2)}
+  .ts-size{white-space:nowrap}
+  .ts-sample{
+    flex:1;min-width:0;white-space:nowrap;overflow:hidden;
+    outline:none;
+  }
+  .ts-sample:focus{outline:2px dashed var(--border-strong);outline-offset:2px;border-radius:4px}
+
+  /* toast */
+  #toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:var(--text);color:#fff;font-size:.82rem;font-weight:500;
+    padding:9px 16px;border-radius:8px;opacity:0;transition:.25s ease;pointer-events:none;z-index:100;
+    font-family:var(--mono);
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* modal for CSS export */
+  #modal{
+    position:fixed;inset:0;background:rgba(20,20,25,.45);z-index:90;
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  #modal.open{display:flex}
+  .modal-box{
+    background:var(--surface);border-radius:12px;max-width:560px;width:100%;
+    max-height:80vh;display:flex;flex-direction:column;overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+  }
+  .modal-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .modal-head h4{font-size:.9rem}
+  .modal-head button{appearance:none;border:none;background:none;font-size:1.1rem;cursor:pointer;color:var(--text-3);padding:4px}
+  .modal-box pre{
+    overflow:auto;padding:16px 18px;font-family:var(--mono);font-size:.78rem;line-height:1.55;
+    color:var(--text-2);flex:1;
+  }
+  .modal-foot{padding:12px 18px;border-top:1px solid var(--border)}
+
+  @media (max-width:900px){
+    .tool{grid-template-columns:1fr}
+    .sidebar{position:static}
+    .ts-meta{width:110px}
+    .bar-cell{width:30%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">Design Reference <span>· offline</span></div>
+    <nav role="tablist">
+      <button class="tab-btn active" role="tab" data-tab="spacing" aria-selected="true">Spacing Grid</button>
+      <button class="tab-btn" role="tab" data-tab="type" aria-selected="false">Type Scale</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ SPACING ============ -->
+<section id="panel-spacing" class="panel active">
+  <div class="tool">
+    <aside class="sidebar">
+      <h2>Grid settings</h2>
+      <div class="field">
+        <label>Base unit</label>
+        <div class="seg" id="sp-base">
+          <button data-v="4" class="active">4&nbsp;pt</button>
+          <button data-v="8">8&nbsp;pt</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Steps</label>
+        <div class="seg" id="sp-mode">
+          <button data-v="curated" class="active">Design scale</button>
+          <button data-v="all">All multiples</button>
+        </div>
+        <div class="hint">Design scale = curated steps used in most design systems. All multiples = every step up to 256px.</div>
+      </div>
+      <div class="field">
+        <label>Preview shape</label>
+        <div class="seg" id="sp-shape">
+          <button data-v="bar" class="active">Bar</button>
+          <button data-v="square">Square</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Copy on click</label>
+        <div class="seg" id="sp-copyunit">
+          <button data-v="px" class="active">px</button>
+          <button data-v="rem">rem</button>
+          <button data-v="pt">pt</button>
+        </div>
+        <div class="hint">Click any row to copy its value.</div>
+      </div>
+      <div class="divider"></div>
+      <button class="btn primary" id="sp-export">Copy as CSS variables</button>
+    </aside>
+
+    <div class="content">
+      <div class="content-head">
+        <div>
+          <h3 id="sp-title">4pt grid — design scale</h3>
+          <div class="sub">1rem = 16px &nbsp;·&nbsp; 1px = 0.75pt (screen 96dpi)</div>
+        </div>
+      </div>
+      <table class="sp-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th class="num">Step</th>
+            <th class="num">px</th>
+            <th class="num">rem</th>
+            <th class="num">pt</th>
+            <th class="bar-cell">Actual size</th>
+          </tr>
+        </thead>
+        <tbody id="sp-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TYPE SCALE ============ -->
+<section id="panel-type" class="panel">
+  <div class="tool">
+    <aside class="sidebar">
+      <h2>Type settings</h2>
+      <div class="field">
+        <label for="ts-basesize">Base font-size (px)</label>
+        <input type="number" id="ts-basesize" value="16" min="8" max="32" step="1">
+      </div>
+      <div class="field">
+        <label for="ts-scale">Scale ratio</label>
+        <select id="ts-scale">
+          <option value="1.067">1.067 — Minor Second</option>
+          <option value="1.125">1.125 — Major Second</option>
+          <option value="1.200" selected>1.200 — Minor Third</option>
+          <option value="1.250">1.250 — Major Third</option>
+          <option value="1.333">1.333 — Perfect Fourth</option>
+          <option value="1.414">1.414 — Augmented Fourth</option>
+          <option value="1.500">1.500 — Perfect Fifth</option>
+          <option value="1.618">1.618 — Golden Ratio</option>
+          <option value="custom">Custom…</option>
+        </select>
+      </div>
+      <div class="field" id="ts-custom-wrap" style="display:none">
+        <label for="ts-custom">Custom ratio</label>
+        <input type="number" id="ts-custom" value="1.28" min="1.01" max="2.5" step="0.001">
+      </div>
+
+      <div class="divider"></div>
+      <h2>Body</h2>
+      <div class="field">
+        <label for="ts-font">Font</label>
+        <select id="ts-font">
+          <option value="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" selected>Inter / System Sans</option>
+          <option value="Arial, Helvetica, sans-serif">Arial / Helvetica</option>
+          <option value="Verdana, Geneva, sans-serif">Verdana</option>
+          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+          <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+          <option value="'Times New Roman', Times, serif">Times New Roman</option>
+          <option value="'Palatino Linotype', Palatino, serif">Palatino</option>
+          <option value="'Courier New', Courier, monospace">Courier New</option>
+          <option value="ui-monospace, Menlo, Consolas, monospace">System Mono</option>
+        </select>
+        <div class="hint">System fonts only — works fully offline. Inter falls back to system sans if not installed.</div>
+      </div>
+      <div class="field">
+        <label for="ts-bodyweight">Weight</label>
+        <select id="ts-bodyweight">
+          <option value="300">300 — Light</option>
+          <option value="400">400 — Regular</option>
+          <option value="500" selected>500 — Medium</option>
+          <option value="600">600 — Semibold</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ts-bodylh">Line-height</label>
+        <input type="number" id="ts-bodylh" value="1.6" min="1" max="2.4" step="0.05">
+      </div>
+
+      <div class="divider"></div>
+      <h2>Headings</h2>
+      <div class="field">
+        <label for="ts-headfont">Font</label>
+        <select id="ts-headfont">
+          <option value="inherit" selected>Inherit from body</option>
+          <option value="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Inter / System Sans</option>
+          <option value="Arial, Helvetica, sans-serif">Arial / Helvetica</option>
+          <option value="Verdana, Geneva, sans-serif">Verdana</option>
+          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+          <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+          <option value="'Times New Roman', Times, serif">Times New Roman</option>
+          <option value="'Palatino Linotype', Palatino, serif">Palatino</option>
+          <option value="'Courier New', Courier, monospace">Courier New</option>
+          <option value="ui-monospace, Menlo, Consolas, monospace">System Mono</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ts-headweight">Weight</label>
+        <select id="ts-headweight">
+          <option value="400">400 — Regular</option>
+          <option value="500">500 — Medium</option>
+          <option value="600">600 — Semibold</option>
+          <option value="700" selected>700 — Bold</option>
+          <option value="800">800 — Extrabold</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ts-headlh">Line-height</label>
+        <input type="number" id="ts-headlh" value="1.15" min="0.9" max="2" step="0.05">
+      </div>
+      <div class="field">
+        <label for="ts-headls">Letter-spacing (em)</label>
+        <input type="number" id="ts-headls" value="-0.022" min="-0.1" max="0.2" step="0.002">
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn primary" id="ts-export">Copy as CSS variables</button>
+    </aside>
+
+    <div class="content">
+      <div class="content-head">
+        <div>
+          <h3>Type scale preview</h3>
+          <div class="sub">Click a size label to copy it · click the text to edit the sample sentence</div>
+        </div>
+        <div class="seg" id="ts-unit" style="width:180px">
+          <button data-v="rem" class="active">REM</button>
+          <button data-v="px">PX</button>
+          <button data-v="pt">PT</button>
+        </div>
+      </div>
+      <div class="ts-rows" id="ts-rows"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast" role="status"></div>
+
+<div id="modal" aria-modal="true" role="dialog">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h4 id="modal-title">CSS variables</h4>
+      <button id="modal-close" aria-label="Close">✕</button>
+    </div>
+    <pre id="modal-code"></pre>
+    <div class="modal-foot">
+      <button class="btn primary" id="modal-copy">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var REM = 16;                 // 1rem = 16px
+  var PX_TO_PT = 72/96;         // 0.75
+
+  /* ---------- helpers ---------- */
+  function $(s,c){return (c||document).querySelector(s)}
+  function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+  function fmt(n,d){ var s = n.toFixed(d===undefined?3:d); return s.replace(/\.?0+$/,'') || '0'; }
+
+  var toastTimer=null;
+  function toast(msg){
+    var t=$('#toast'); t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){t.classList.remove('show')},1400);
+  }
+  function copyText(txt,label){
+    function done(){ toast('Copied: '+(label||txt)); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done,function(){fallback()});
+    } else fallback();
+    function fallback(){
+      var ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');done();}catch(e){}
+      document.body.removeChild(ta);
+    }
+  }
+
+  /* segmented control wiring */
+  function seg(id, onChange){
+    var el=$(id);
+    el.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      $$('button',el).forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      onChange(b.dataset.v);
+    });
+    return function(){ return $('button.active',el).dataset.v; };
+  }
+
+  /* ---------- tabs ---------- */
+  $$('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      $$('.tab-btn').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-selected','false')});
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      $$('.panel').forEach(function(p){p.classList.remove('active')});
+      $('#panel-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ================= SPACING ================= */
+  // Curated design-system scales (px)
+  var CURATED = {
+    4:[4,8,12,16,20,24,28,32,36,40,44,48,56,64,72,80,96,112,128,144,160,192,224,256,320,384,448,512],
+    8:[8,16,24,32,40,48,56,64,72,80,96,112,128,160,192,224,256,320,384,448,512]
+  };
+  var MILESTONES = [16,32,48,64,96,128,192,256,384,512]; // visually anchor rows
+
+  var spState = { base:4, mode:'curated', shape:'bar', copy:'px' };
+
+  var getBase   = seg('#sp-base',   function(v){spState.base=+v; renderSpacing();});
+  var getMode   = seg('#sp-mode',   function(v){spState.mode=v; renderSpacing();});
+  var getShape  = seg('#sp-shape',  function(v){spState.shape=v; renderSpacing();});
+  var getCopyU  = seg('#sp-copyunit',function(v){spState.copy=v;});
+
+  function spacingValues(){
+    if(spState.mode==='all'){
+      var out=[], b=spState.base;
+      for(var v=b; v<=256; v+=b) out.push(v);
+      return out;
+    }
+    return CURATED[spState.base];
+  }
+
+  function renderSpacing(){
+    var vals = spacingValues();
+    var body = $('#sp-body');
+    var maxBar = 512;
+    $('#sp-title').textContent = spState.base+'pt grid — '+(spState.mode==='curated'?'design scale':'all multiples');
+    var html = vals.map(function(px,i){
+      var step = px/spState.base;
+      var rem = px/REM, pt = px*PX_TO_PT;
+      var isMile = MILESTONES.indexOf(px)>-1;
+      var vis;
+      if(spState.shape==='square'){
+        var s = Math.min(px,96);
+        vis = '<div class="bar-wrap"><div class="square" style="width:'+s+'px;height:'+s+'px" title="'+px+'×'+px+'px"></div>'+
+              (px>96?'<span style="font-size:.7rem;color:var(--text-3)">shown capped at 96px</span>':'')+'</div>';
+      } else {
+        var w = Math.min(px,maxBar);
+        vis = '<div class="bar-wrap"><div class="bar" style="width:'+w+'px"></div>'+
+              (px>maxBar?'<span style="font-size:.7rem;color:var(--text-3)">capped</span>':'')+'</div>';
+      }
+      return '<tr class="sp-row'+(isMile?' milestone':'')+'" data-px="'+px+'">'+
+        '<td><span class="token">--space-'+fmt(step,2).replace('.','\u2011')+'</span></td>'+
+        '<td class="mono"><span class="mult">×'+fmt(step,2)+'</span></td>'+
+        '<td class="mono"><b>'+px+'</b>px</td>'+
+        '<td class="mono">'+fmt(rem,4)+'rem</td>'+
+        '<td class="mono">'+fmt(pt,2)+'pt</td>'+
+        '<td class="bar-cell">'+vis+'</td>'+
+      '</tr>';
+    }).join('');
+    body.innerHTML = html;
+  }
+
+  $('#sp-body').addEventListener('click',function(e){
+    var tr = e.target.closest('tr.sp-row'); if(!tr) return;
+    var px = +tr.dataset.px, val;
+    if(spState.copy==='rem') val = fmt(px/REM,4)+'rem';
+    else if(spState.copy==='pt') val = fmt(px*PX_TO_PT,2)+'pt';
+    else val = px+'px';
+    copyText(val);
+    tr.classList.remove('copied-flash'); void tr.offsetWidth; tr.classList.add('copied-flash');
+  });
+
+  $('#sp-export').addEventListener('click',function(){
+    var vals = spacingValues();
+    var lines = vals.map(function(px){
+      var step = fmt(px/spState.base,2).replace('.','-');
+      return '  --space-'+step+': '+fmt(px/REM,4)+'rem; /* '+px+'px */';
+    });
+    openModal('Spacing — '+spState.base+'pt grid', ':root {\n'+lines.join('\n')+'\n}');
+  });
+
+  /* ================= TYPE SCALE ================= */
+  var LEVELS = [
+    {tag:'h1', exp:6},{tag:'h2', exp:5},{tag:'h3', exp:4},
+    {tag:'h4', exp:3},{tag:'h5', exp:2},{tag:'h6', exp:1},
+    {tag:'p', exp:0},{tag:'small', exp:-1},{tag:'tiny', exp:-2}
+  ];
+  var SAMPLE = 'The quick brown fox jumps over the lazy dog';
+  var samples = {}; LEVELS.forEach(function(l){samples[l.tag]=SAMPLE});
+
+  var tsUnit = 'rem';
+  seg('#ts-unit', function(v){ tsUnit=v; renderType(); });
+
+  var ids = ['ts-basesize','ts-scale','ts-custom','ts-font','ts-bodyweight','ts-bodylh','ts-headfont','ts-headweight','ts-headlh','ts-headls'];
+  ids.forEach(function(id){
+    $('#'+id).addEventListener('input', function(){
+      if(id==='ts-scale'){
+        $('#ts-custom-wrap').style.display = ($('#ts-scale').value==='custom') ? '' : 'none';
+      }
+      renderType();
+    });
+  });
+
+  function getRatio(){
+    var v = $('#ts-scale').value;
+    if(v==='custom') return parseFloat($('#ts-custom').value)||1.2;
+    return parseFloat(v);
+  }
+  function getCfg(){
+    return {
+      base: parseFloat($('#ts-basesize').value)||16,
+      ratio: getRatio(),
+      font: $('#ts-font').value,
+      bodyWeight: $('#ts-bodyweight').value,
+      bodyLh: parseFloat($('#ts-bodylh').value)||1.6,
+      headFont: $('#ts-headfont').value,
+      headWeight: $('#ts-headweight').value,
+      headLh: parseFloat($('#ts-headlh').value)||1.15,
+      headLs: parseFloat($('#ts-headls').value)||0
+    };
+  }
+  function sizeLabel(px){
+    if(tsUnit==='px')  return fmt(px,2)+'px';
+    if(tsUnit==='pt')  return fmt(px*PX_TO_PT,2)+'pt';
+    return fmt(px/REM,3)+'rem';
+  }
+
+  function renderType(){
+    var c = getCfg();
+    var rows = $('#ts-rows');
+    rows.innerHTML = LEVELS.map(function(l){
+      var px = c.base * Math.pow(c.ratio, l.exp);
+      var isHead = l.exp>0;
+      var style = 'font-size:'+fmt(px,3)+'px;'+
+        'font-family:'+(isHead ? (c.headFont==='inherit'?c.font:c.headFont) : c.font)+';'+
+        'font-weight:'+(isHead?c.headWeight:c.bodyWeight)+';'+
+        'line-height:'+(isHead?c.headLh:c.bodyLh)+';'+
+        (isHead && c.headLs ? 'letter-spacing:'+c.headLs+'em;':'')+
+        (l.tag==='tiny'?'color:var(--text-3);':'');
+      return '<div class="ts-row">'+
+        '<div class="ts-meta" data-px="'+fmt(px,3)+'" title="Click to copy">'+
+          '<span class="ts-tag">'+l.tag+'</span>'+
+          '<span class="ts-size">'+sizeLabel(px)+'</span>'+
+        '</div>'+
+        '<div class="ts-sample" contenteditable="true" spellcheck="false" data-tag="'+l.tag+'" style="'+style+'">'+samples[l.tag]+'</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  $('#ts-rows').addEventListener('click',function(e){
+    var m = e.target.closest('.ts-meta'); if(!m) return;
+    var px = parseFloat(m.dataset.px), val;
+    if(tsUnit==='px') val=fmt(px,2)+'px';
+    else if(tsUnit==='pt') val=fmt(px*PX_TO_PT,2)+'pt';
+    else val=fmt(px/REM,4)+'rem';
+    copyText(val);
+  });
+  // keep edited sample text in sync across re-renders
+  $('#ts-rows').addEventListener('input',function(e){
+    var s=e.target.closest('.ts-sample'); if(!s) return;
+    samples[s.dataset.tag]=s.textContent;
+  });
+
+  $('#ts-export').addEventListener('click',function(){
+    var c=getCfg();
+    var lines = LEVELS.map(function(l){
+      var px = c.base * Math.pow(c.ratio, l.exp);
+      var name = l.tag==='p' ? 'base' : l.tag;
+      return '  --text-'+name+': '+fmt(px/REM,4)+'rem; /* '+fmt(px,2)+'px */';
+    });
+    var css = ':root {\n'+
+      '  /* scale '+fmt(c.ratio,3)+' · base '+c.base+'px */\n'+
+      lines.join('\n')+'\n\n'+
+      '  --font-body: '+c.font+';\n'+
+      '  --font-heading: '+(c.headFont==='inherit'?c.font:c.headFont)+';\n'+
+      '  --leading-body: '+c.bodyLh+';\n'+
+      '  --leading-heading: '+c.headLh+';\n'+
+      '  --tracking-heading: '+c.headLs+'em;\n'+
+      '  --weight-body: '+c.bodyWeight+';\n'+
+      '  --weight-heading: '+c.headWeight+';\n'+
+      '}';
+    openModal('Type scale — '+fmt(c.ratio,3)+' / '+c.base+'px', css);
+  });
+
+  /* ---------- modal ---------- */
+  function openModal(title, code){
+    $('#modal-title').textContent=title;
+    $('#modal-code').textContent=code;
+    $('#modal').classList.add('open');
+  }
+  $('#modal-close').addEventListener('click',function(){$('#modal').classList.remove('open')});
+  $('#modal').addEventListener('click',function(e){if(e.target.id==='modal')$('#modal').classList.remove('open')});
+  $('#modal-copy').addEventListener('click',function(){
+    copyText($('#modal-code').textContent,'CSS variables');
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')$('#modal').classList.remove('open');
+  });
+
+  /* init */
+  renderSpacing();
+  renderType();
+})();
+</script>
+</body>
+</html>
