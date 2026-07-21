@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [1.2.0] - 2026-07-21
+
+### Added
+- 16pt option in the Spacing Grid base unit (alongside 4pt and 8pt), with its own curated design scale.
+
+### Changed
+- Removed the token column from the spacing table — redundant with the step multiplier; token names (`--space-X`) remain in the CSS variables export.
+
 ## [1.1.0] - 2026-07-21
 
 ### Added

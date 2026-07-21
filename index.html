@@ -170,11 +170,6 @@
   td.mono,th.num{font-family:var(--mono)}
   td.mono{font-size:.8rem;color:var(--text-2);white-space:nowrap}
   td.mono b{color:var(--text);font-weight:600}
-  .token{
-    font-family:var(--mono);font-size:.75rem;font-weight:600;
-    background:var(--bg);border:1px solid var(--border);border-radius:5px;
-    padding:2px 7px;color:var(--text-2);white-space:nowrap;
-  }
   .mult{font-family:var(--mono);font-size:.75rem;color:var(--text-3);white-space:nowrap}
   .bar-cell{width:45%}
   .bar{
@@ -281,6 +276,7 @@
         <div class="seg" id="sp-base">
           <button data-v="4" class="active">4&nbsp;pt</button>
           <button data-v="8">8&nbsp;pt</button>
+          <button data-v="16">16&nbsp;pt</button>
         </div>
       </div>
       <div class="field">
@@ -321,7 +317,6 @@
       <table class="sp-table">
         <thead>
           <tr>
-            <th>Token</th>
             <th class="num">Step</th>
             <th class="num">px</th>
             <th class="num">rem</th>
@@ -532,7 +527,8 @@
   // Curated design-system scales (px)
   var CURATED = {
     4:[4,8,12,16,20,24,28,32,36,40,44,48,56,64,72,80,96,112,128,144,160,192,224,256,320,384,448,512],
-    8:[8,16,24,32,40,48,56,64,72,80,96,112,128,160,192,224,256,320,384,448,512]
+    8:[8,16,24,32,40,48,56,64,72,80,96,112,128,160,192,224,256,320,384,448,512],
+    16:[16,32,48,64,80,96,112,128,160,192,224,256,320,384,448,512]
   };
   var MILESTONES = [16,32,48,64,96,128,192,256,384,512]; // visually anchor rows
 
@@ -572,7 +568,6 @@
               (px>maxBar?'<span style="font-size:.7rem;color:var(--text-3)">capped</span>':'')+'</div>';
       }
       return '<tr class="sp-row'+(isMile?' milestone':'')+'" data-px="'+px+'">'+
-        '<td><span class="token">--space-'+fmt(step,2).replace('.','\u2011')+'</span></td>'+
         '<td class="mono"><span class="mult">×'+fmt(step,2)+'</span></td>'+
         '<td class="mono"><b>'+px+'</b>px</td>'+
         '<td class="mono">'+fmt(rem,4)+'rem</td>'+
