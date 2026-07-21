@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [1.4.0] - 2026-07-21
+
+### Added
+- Draggable splitter between the scale list and the page preview — resizable vertically in the Below layout and horizontally in the Side layout, with keyboard support (arrow keys, Shift for bigger steps) and per-layout position memory.
+
+### Changed
+- Type Scale: the scale list and the page preview now live in two separate cards instead of sharing one container.
+- Controls reorganized: the REM/PX/PT unit toggle sits in the scale card; template, layout, device and fullscreen controls sit in the preview card header.
+- Layout (Below/Side), device (Desktop/Mobile), fullscreen and close buttons now use inline Lucide icons (ISC license) — still zero external dependencies.
+
 ## [1.3.0] - 2026-07-21
 
 ### Added

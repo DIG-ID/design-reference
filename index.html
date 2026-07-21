@@ -209,6 +209,24 @@
   .head-controls .seg button{flex:none;padding:6px 12px}
   .head-controls .btn{width:auto}
 
+  /* ---------- split panes + resizable splitter ---------- */
+  .ts-split{display:flex;height:calc(100vh - 104px);min-height:420px}
+  .ts-split.below{flex-direction:column}
+  .ts-split.side{flex-direction:row}
+  .ts-pane{display:flex;flex-direction:column;min-width:0;min-height:0}
+  .ts-pane .content-head{flex:none}
+  #ts-scale-box{flex:0 1 var(--split,50%)}
+  #pv-box{flex:1 1 0}
+  .ts-rows{flex:1;overflow:auto}
+  #ts-splitter{flex:none;display:flex;align-items:center;justify-content:center;touch-action:none}
+  .below>#ts-splitter{height:14px;cursor:row-resize}
+  .side>#ts-splitter{width:14px;cursor:col-resize}
+  #ts-splitter .grip{background:var(--border-strong);border-radius:99px;pointer-events:none}
+  .below>#ts-splitter .grip{width:44px;height:4px}
+  .side>#ts-splitter .grip{width:4px;height:44px}
+  #ts-splitter:hover .grip,#ts-splitter.dragging .grip{background:var(--accent)}
+  #ts-splitter:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:6px}
+
   /* ---------- page preview (landing / blog) ---------- */
   .pv-select{
     padding:7px 10px;font:inherit;font-size:.82rem;font-weight:500;
@@ -216,20 +234,19 @@
     background:var(--surface);color:var(--text);cursor:pointer;
   }
   .pv-select:focus{outline:2px solid var(--accent);outline-offset:-1px}
-  #ts-preview{padding:20px;background:var(--bg);border-top:1px solid var(--border)}
-  #ts-preview.fullscreen{position:fixed;inset:0;z-index:80;overflow:auto;padding:24px;border:none}
-  .pv-close{display:none;position:fixed;top:16px;right:16px;z-index:81;width:auto}
-  #ts-preview.fullscreen .pv-close{display:block}
+  #ts-preview{flex:1;overflow:auto;padding:20px;background:var(--bg)}
+  #ts-preview.fullscreen{position:fixed;inset:0;z-index:80;padding:24px}
+  .pv-close{display:none;position:fixed;top:16px;right:16px;z-index:81;width:auto;align-items:center;gap:8px}
+  #ts-preview.fullscreen .pv-close{display:inline-flex}
+  .pv-close svg{width:14px;height:14px;flex:none}
   .pv-frame{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:0 auto;overflow:hidden}
   .pv-frame.mobile{width:375px;max-width:100%}
-  #ts-body.side{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
-  #ts-body.side .ts-rows{max-height:75vh;overflow:auto}
-  #ts-body.side #ts-preview:not(.fullscreen){max-height:75vh;overflow:auto;border-top:none;border-left:1px solid var(--border)}
-  @media (max-width:1100px){
-    #ts-body.side{grid-template-columns:1fr}
-    #ts-body.side .ts-rows{max-height:none}
-    #ts-body.side #ts-preview:not(.fullscreen){max-height:none;border-left:none;border-top:1px solid var(--border)}
-  }
+
+  /* icon-only segmented buttons and buttons (inline Lucide SVGs) */
+  .seg.seg-icons button{display:flex;align-items:center;justify-content:center;padding:6px 10px}
+  .seg.seg-icons svg{width:15px;height:15px;display:block}
+  .icon-btn{display:flex;align-items:center;justify-content:center;padding:7px 9px}
+  .icon-btn svg{width:15px;height:15px;display:block}
 
   .pv-page{
     font-family:var(--pv-body-font);font-weight:var(--pv-body-weight);
@@ -302,6 +319,11 @@
     .sidebar{position:static}
     .ts-meta{width:110px}
     .bar-cell{width:30%}
+    /* stack the split panes and drop the splitter on small screens */
+    .ts-split,.ts-split.side{flex-direction:column;height:auto;min-height:0}
+    #ts-splitter{display:none}
+    #ts-scale-box{flex:none}
+    .ts-rows{max-height:50vh}
   }
 </style>
 </head>
@@ -491,37 +513,63 @@
       <button class="btn primary" id="ts-export">Copy as CSS variables</button>
     </aside>
 
-    <div class="content">
-      <div class="content-head">
-        <div>
-          <h3>Type scale preview</h3>
-          <div class="sub">Click a size label to copy it · click the text to edit the sample sentence</div>
+    <div class="ts-split below" id="ts-body">
+      <div class="content ts-pane" id="ts-scale-box">
+        <div class="content-head">
+          <div>
+            <h3>Type scale preview</h3>
+            <div class="sub">Click a size label to copy it · click the text to edit the sample sentence</div>
+          </div>
+          <div class="head-controls">
+            <div class="seg" id="ts-unit">
+              <button data-v="rem" class="active">REM</button>
+              <button data-v="px">PX</button>
+              <button data-v="pt">PT</button>
+            </div>
+          </div>
         </div>
-        <div class="head-controls">
-          <div class="seg" id="ts-unit">
-            <button data-v="rem" class="active">REM</button>
-            <button data-v="px">PX</button>
-            <button data-v="pt">PT</button>
-          </div>
-          <select id="pv-tpl" class="pv-select" aria-label="Page preview template">
-            <option value="landing" selected>Landing page</option>
-            <option value="blog">Blog post</option>
-          </select>
-          <div class="seg" id="pv-layout">
-            <button data-v="below" class="active">Below</button>
-            <button data-v="side">Side</button>
-          </div>
-          <div class="seg" id="ts-device">
-            <button data-v="desktop" class="active">Desktop</button>
-            <button data-v="mobile">Mobile</button>
-          </div>
-          <button class="btn" id="ts-fullscreen">Fullscreen</button>
-        </div>
-      </div>
-      <div id="ts-body">
         <div class="ts-rows" id="ts-rows"></div>
+      </div>
+
+      <div id="ts-splitter" role="separator" aria-orientation="horizontal" aria-label="Resize preview panels" title="Drag to resize" tabindex="0"><span class="grip"></span></div>
+
+      <div class="content ts-pane" id="pv-box">
+        <div class="content-head">
+          <div>
+            <h3>Page preview</h3>
+            <div class="sub">Rendered live with the current type scale</div>
+          </div>
+          <div class="head-controls">
+            <select id="pv-tpl" class="pv-select" aria-label="Page preview template">
+              <option value="landing" selected>Landing page</option>
+              <option value="blog">Blog post</option>
+            </select>
+            <div class="seg seg-icons" id="pv-layout">
+              <button data-v="below" class="active" title="Preview below the scale" aria-label="Preview below the scale">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/></svg>
+              </button>
+              <button data-v="side" title="Preview side by side" aria-label="Preview side by side">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>
+              </button>
+            </div>
+            <div class="seg seg-icons" id="ts-device">
+              <button data-v="desktop" class="active" title="Desktop width" aria-label="Desktop width">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+              </button>
+              <button data-v="mobile" title="Mobile width (375px)" aria-label="Mobile width (375px)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+              </button>
+            </div>
+            <button class="btn icon-btn" id="ts-fullscreen" title="Fullscreen preview" aria-label="Fullscreen preview">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </button>
+          </div>
+        </div>
         <div id="ts-preview">
-          <button class="btn pv-close" id="pv-close">Close ✕ &nbsp;(Esc)</button>
+          <button class="btn pv-close" id="pv-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+            Close (Esc)
+          </button>
           <div class="pv-frame" id="pv-frame"><div class="pv-page" id="pv-page"></div></div>
         </div>
       </div>
@@ -809,10 +857,53 @@
     $('#pv-page').innerHTML = TPL[$('#pv-tpl').value];
   }
 
+  /* per-layout splitter position (% of the first pane), kept while the page is open */
+  var splitPct = { below:50, side:50 };
+
   function updatePreviewLayout(){
-    $('#ts-body').classList.toggle('side', pvLayout==='side');
+    var body = $('#ts-body');
+    body.classList.toggle('side', pvLayout==='side');
+    body.classList.toggle('below', pvLayout!=='side');
+    body.style.setProperty('--split', splitPct[pvLayout]+'%');
+    $('#ts-splitter').setAttribute('aria-orientation', pvLayout==='side' ? 'vertical' : 'horizontal');
     $('#pv-frame').classList.toggle('mobile', tsDevice==='mobile');
   }
+
+  /* ---------- resizable splitter (drag + arrow keys) ---------- */
+  (function(){
+    var sp = $('#ts-splitter'), body = $('#ts-body');
+    function setPct(p){
+      p = Math.min(80, Math.max(20, p));
+      splitPct[pvLayout] = p;
+      body.style.setProperty('--split', p+'%');
+    }
+    sp.addEventListener('pointerdown', function(e){
+      e.preventDefault();
+      try{ sp.setPointerCapture(e.pointerId); }catch(err){}
+      sp.classList.add('dragging');
+      function move(ev){
+        var r = body.getBoundingClientRect();
+        var p = (pvLayout==='side')
+          ? (ev.clientX - r.left) / r.width * 100
+          : (ev.clientY - r.top) / r.height * 100;
+        setPct(p);
+      }
+      function up(){
+        sp.classList.remove('dragging');
+        sp.removeEventListener('pointermove', move);
+        sp.removeEventListener('pointerup', up);
+        sp.removeEventListener('pointercancel', up);
+      }
+      sp.addEventListener('pointermove', move);
+      sp.addEventListener('pointerup', up);
+      sp.addEventListener('pointercancel', up);
+    });
+    sp.addEventListener('keydown', function(e){
+      var step = e.shiftKey ? 10 : 2;
+      if(e.key==='ArrowLeft' || e.key==='ArrowUp'){ setPct(splitPct[pvLayout]-step); e.preventDefault(); }
+      else if(e.key==='ArrowRight' || e.key==='ArrowDown'){ setPct(splitPct[pvLayout]+step); e.preventDefault(); }
+    });
+  })();
 
   $('#ts-fullscreen').addEventListener('click',function(){
     $('#ts-preview').classList.add('fullscreen');
@@ -877,6 +968,7 @@
   /* init */
   renderSpacing();
   renderType();
+  updatePreviewLayout();
 })();
 </script>
 </body>
