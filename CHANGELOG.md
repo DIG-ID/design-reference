@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [1.3.0] - 2026-07-21
+
+### Added
+- Page preview in the Type Scale tool, always visible alongside the scale list: landing page or blog post template (dropdown) rendered live with the current scale (sizes, fonts, weights, line-heights, letter-spacing).
+- Layout toggle Below / Side (preview under or next to the scale list), device toggle Desktop / Mobile (375px), and fullscreen mode (closes with Esc).
+
+### Changed
+- Fully fluid layout: removed the 1400px max-width so the tool always uses the whole viewport.
+
 ## [1.2.0] - 2026-07-21
 
 ### Added

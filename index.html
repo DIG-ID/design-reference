@@ -64,7 +64,6 @@
     position:sticky;top:0;z-index:50;
   }
   .topbar{
-    max-width:1400px;margin:0 auto;
     display:flex;align-items:center;gap:32px;
     padding:0 24px;height:56px;
   }
@@ -96,7 +95,7 @@
   [data-theme="dark"] .icon-moon{display:none}
   :root:not([data-theme="dark"]) .icon-sun{display:none}
 
-  main{max-width:1400px;margin:0 auto;padding:24px}
+  main{padding:24px}
   .panel{display:none}
   .panel.active{display:block}
 
@@ -205,6 +204,69 @@
     outline:none;
   }
   .ts-sample:focus{outline:2px dashed var(--border-strong);outline-offset:2px;border-radius:4px}
+
+  .head-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .head-controls .seg button{flex:none;padding:6px 12px}
+  .head-controls .btn{width:auto}
+
+  /* ---------- page preview (landing / blog) ---------- */
+  .pv-select{
+    padding:7px 10px;font:inherit;font-size:.82rem;font-weight:500;
+    border:1px solid var(--border-strong);border-radius:7px;
+    background:var(--surface);color:var(--text);cursor:pointer;
+  }
+  .pv-select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  #ts-preview{padding:20px;background:var(--bg);border-top:1px solid var(--border)}
+  #ts-preview.fullscreen{position:fixed;inset:0;z-index:80;overflow:auto;padding:24px;border:none}
+  .pv-close{display:none;position:fixed;top:16px;right:16px;z-index:81;width:auto}
+  #ts-preview.fullscreen .pv-close{display:block}
+  .pv-frame{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:0 auto;overflow:hidden}
+  .pv-frame.mobile{width:375px;max-width:100%}
+  #ts-body.side{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+  #ts-body.side .ts-rows{max-height:75vh;overflow:auto}
+  #ts-body.side #ts-preview:not(.fullscreen){max-height:75vh;overflow:auto;border-top:none;border-left:1px solid var(--border)}
+  @media (max-width:1100px){
+    #ts-body.side{grid-template-columns:1fr}
+    #ts-body.side .ts-rows{max-height:none}
+    #ts-body.side #ts-preview:not(.fullscreen){max-height:none;border-left:none;border-top:1px solid var(--border)}
+  }
+
+  .pv-page{
+    font-family:var(--pv-body-font);font-weight:var(--pv-body-weight);
+    line-height:var(--pv-body-lh);font-size:var(--pv-p);color:var(--text);
+    padding:32px;overflow-wrap:break-word;
+  }
+  .pv-frame.mobile .pv-page{padding:20px}
+  .pv-page h1,.pv-page h2,.pv-page h3{
+    font-family:var(--pv-head-font);font-weight:var(--pv-head-weight);
+    line-height:var(--pv-head-lh);letter-spacing:var(--pv-head-ls);margin:0 0 .45em;
+  }
+  .pv-page h1{font-size:var(--pv-h1)}
+  .pv-page h2{font-size:var(--pv-h2);margin-top:1.6em}
+  .pv-page h3{font-size:var(--pv-h3)}
+  .pv-page p{margin:0 0 1em}
+  .pv-page small{font-size:var(--pv-small);color:var(--text-3)}
+  .pv-page ul{margin:0 0 1em 1.2em;padding:0}
+  .pv-page li{margin-bottom:.4em}
+  .pv-page blockquote{
+    margin:1.4em 0;padding:.2em 0 .2em 1em;border-left:3px solid var(--accent);
+    color:var(--text-2);font-size:var(--pv-h6);
+  }
+  .pv-nav{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:40px}
+  .pv-nav span{font-size:var(--pv-small);color:var(--text-2)}
+  .pv-hero{text-align:center;max-width:640px;margin:0 auto 56px}
+  .pv-hero p{color:var(--text-2)}
+  .pv-btn{
+    display:inline-block;font-size:var(--pv-small);font-weight:600;
+    border:1px solid var(--border-strong);border-radius:8px;padding:.6em 1.1em;margin:0 4px;
+  }
+  .pv-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .pv-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:1.2em}
+  .pv-cards>div{border:1px solid var(--border);border-radius:8px;padding:18px}
+  .pv-cards p{margin:0;color:var(--text-2);font-size:var(--pv-small)}
+  .pv-foot{border-top:1px solid var(--border);margin-top:48px;padding-top:20px}
+  .pv-article{max-width:640px;margin:0 auto}
+  .pv-lede{font-size:var(--pv-h6);color:var(--text-2)}
 
   /* toast */
   #toast{
@@ -435,13 +497,34 @@
           <h3>Type scale preview</h3>
           <div class="sub">Click a size label to copy it · click the text to edit the sample sentence</div>
         </div>
-        <div class="seg" id="ts-unit" style="width:180px">
-          <button data-v="rem" class="active">REM</button>
-          <button data-v="px">PX</button>
-          <button data-v="pt">PT</button>
+        <div class="head-controls">
+          <div class="seg" id="ts-unit">
+            <button data-v="rem" class="active">REM</button>
+            <button data-v="px">PX</button>
+            <button data-v="pt">PT</button>
+          </div>
+          <select id="pv-tpl" class="pv-select" aria-label="Page preview template">
+            <option value="landing" selected>Landing page</option>
+            <option value="blog">Blog post</option>
+          </select>
+          <div class="seg" id="pv-layout">
+            <button data-v="below" class="active">Below</button>
+            <button data-v="side">Side</button>
+          </div>
+          <div class="seg" id="ts-device">
+            <button data-v="desktop" class="active">Desktop</button>
+            <button data-v="mobile">Mobile</button>
+          </div>
+          <button class="btn" id="ts-fullscreen">Fullscreen</button>
         </div>
       </div>
-      <div class="ts-rows" id="ts-rows"></div>
+      <div id="ts-body">
+        <div class="ts-rows" id="ts-rows"></div>
+        <div id="ts-preview">
+          <button class="btn pv-close" id="pv-close">Close ✕ &nbsp;(Esc)</button>
+          <div class="pv-frame" id="pv-frame"><div class="pv-page" id="pv-page"></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -663,7 +746,80 @@
         '<div class="ts-sample" contenteditable="true" spellcheck="false" data-tag="'+l.tag+'" style="'+style+'">'+samples[l.tag]+'</div>'+
       '</div>';
     }).join('');
+    renderPreview();
   }
+
+  /* ---------- page preview (landing / blog) ---------- */
+  var TPL = {
+    landing:
+      '<header class="pv-nav"><strong>Northwind</strong><span>Features · Pricing · Docs · Contact</span></header>'+
+      '<section class="pv-hero">'+
+        '<h1>Ship consistent interfaces, faster</h1>'+
+        '<p>Northwind gives your team a shared rhythm for spacing and typography, so every screen feels like it belongs to the same product.</p>'+
+        '<p><span class="pv-btn primary">Get started</span><span class="pv-btn">See how it works</span></p>'+
+      '</section>'+
+      '<section>'+
+        '<h2>Why teams choose it</h2>'+
+        '<div class="pv-cards">'+
+          '<div><h3>Modular scale</h3><p>Every size derives from one ratio, keeping hierarchy predictable across pages.</p></div>'+
+          '<div><h3>Design tokens</h3><p>Export the whole system as CSS variables and drop it into any codebase.</p></div>'+
+          '<div><h3>Works offline</h3><p>A single HTML file with zero dependencies — open it anywhere, anytime.</p></div>'+
+        '</div>'+
+      '</section>'+
+      '<footer class="pv-foot"><small>© 2026 Northwind Labs — Terms · Privacy</small></footer>',
+    blog:
+      '<article class="pv-article">'+
+        '<small>Design systems · March 2026 · 6 min read</small>'+
+        '<h1>Choosing a type scale that holds up in real layouts</h1>'+
+        '<p class="pv-lede">A modular scale looks tidy in a spec sheet, but the real test is how it behaves inside navigation bars, cards and long-form text.</p>'+
+        '<p>Most teams pick a ratio, generate nine sizes and move on. Then the h1 wraps awkwardly on mobile, captions become unreadable, and buttons inherit sizes that were never meant for them.</p>'+
+        '<h2>Start from the body size</h2>'+
+        '<p>Body text is where readers spend their time, so lock it first — usually 16 to 18px — and let the ratio grow the headings from there instead of designing the hero headline first.</p>'+
+        '<blockquote>“The scale is not the system. The system is how the scale survives contact with content.”</blockquote>'+
+        '<h3>Test with real content</h3>'+
+        '<p>Preview the scale against the kind of pages you actually ship:</p>'+
+        '<ul>'+
+          '<li>A landing page with a hero and feature cards</li>'+
+          '<li>A long-form article with quotes and lists</li>'+
+          '<li>Dense UI like tables and sidebars</li>'+
+        '</ul>'+
+        '<p>If the hierarchy still reads clearly in all three, the ratio is right. If not, adjust the ratio — not the individual sizes.</p>'+
+        '<p><small>Filed under typography, design tokens</small></p>'+
+      '</article>'
+  };
+
+  var pvLayout='below', tsDevice='desktop';
+  seg('#pv-layout', function(v){pvLayout=v; updatePreviewLayout();});
+  seg('#ts-device', function(v){tsDevice=v; updatePreviewLayout();});
+  $('#pv-tpl').addEventListener('input', function(){ renderPreview(); });
+
+  function renderPreview(){
+    var c = getCfg(), f = $('#pv-frame');
+    function px(exp){ return fmt(c.base*Math.pow(c.ratio,exp),3)+'px'; }
+    ['h1','h2','h3','h4','h5','h6'].forEach(function(t,i){ f.style.setProperty('--pv-'+t, px(6-i)); });
+    f.style.setProperty('--pv-p', px(0));
+    f.style.setProperty('--pv-small', px(-1));
+    f.style.setProperty('--pv-body-font', c.font);
+    f.style.setProperty('--pv-head-font', c.headFont==='inherit'?c.font:c.headFont);
+    f.style.setProperty('--pv-body-weight', c.bodyWeight);
+    f.style.setProperty('--pv-head-weight', c.headWeight);
+    f.style.setProperty('--pv-body-lh', c.bodyLh);
+    f.style.setProperty('--pv-head-lh', c.headLh);
+    f.style.setProperty('--pv-head-ls', c.headLs+'em');
+    $('#pv-page').innerHTML = TPL[$('#pv-tpl').value];
+  }
+
+  function updatePreviewLayout(){
+    $('#ts-body').classList.toggle('side', pvLayout==='side');
+    $('#pv-frame').classList.toggle('mobile', tsDevice==='mobile');
+  }
+
+  $('#ts-fullscreen').addEventListener('click',function(){
+    $('#ts-preview').classList.add('fullscreen');
+  });
+  $('#pv-close').addEventListener('click',function(){
+    $('#ts-preview').classList.remove('fullscreen');
+  });
 
   $('#ts-rows').addEventListener('click',function(e){
     var m = e.target.closest('.ts-meta'); if(!m) return;
@@ -712,7 +868,10 @@
     copyText($('#modal-code').textContent,'CSS variables');
   });
   document.addEventListener('keydown',function(e){
-    if(e.key==='Escape')$('#modal').classList.remove('open');
+    if(e.key==='Escape'){
+      $('#modal').classList.remove('open');
+      $('#ts-preview').classList.remove('fullscreen');
+    }
   });
 
   /* init */
