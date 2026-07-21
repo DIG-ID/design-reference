@@ -4,20 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Design Reference — Spacing & Type Scale</title>
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('theme');
+    if(!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
 <style>
   :root{
     --bg:#f7f7f8;
     --surface:#ffffff;
+    --surface-2:#fbfbfc;
     --border:#e4e4e9;
+    --border-soft:#f0f0f3;
     --border-strong:#d0d0d8;
     --text:#17171c;
     --text-2:#5c5c66;
     --text-3:#9a9aa4;
     --accent:#2b4bd7;
     --accent-soft:#eef1fd;
+    --flash:#dcfce7;
     --mono:ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     --radius:8px;
+    color-scheme:light;
+  }
+  [data-theme="dark"]{
+    --bg:#141417;
+    --surface:#1d1d22;
+    --surface-2:#222228;
+    --border:#2c2c34;
+    --border-soft:#26262d;
+    --border-strong:#3e3e48;
+    --text:#ececf1;
+    --text-2:#a5a5b0;
+    --text-3:#70707c;
+    --accent:#7e96f2;
+    --accent-soft:#232a45;
+    --flash:#1d3a2a;
+    color-scheme:dark;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{font-size:16px}
@@ -56,6 +84,18 @@
   }
   .tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:6px}
 
+  .theme-toggle{
+    margin-left:auto;appearance:none;cursor:pointer;
+    background:none;border:1px solid var(--border);border-radius:8px;
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    color:var(--text-2);flex:none;
+  }
+  .theme-toggle:hover{color:var(--text);border-color:var(--border-strong)}
+  .theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .theme-toggle svg{width:16px;height:16px;display:block}
+  [data-theme="dark"] .icon-moon{display:none}
+  :root:not([data-theme="dark"]) .icon-sun{display:none}
+
   main{max-width:1400px;margin:0 auto;padding:24px}
   .panel{display:none}
   .panel.active{display:block}
@@ -73,7 +113,7 @@
   .field label{display:block;font-size:.8rem;font-weight:500;color:var(--text-2);margin-bottom:5px}
   .field input[type=text],.field input[type=number],.field select{
     width:100%;padding:8px 10px;font:inherit;font-size:.875rem;
-    border:1px solid var(--border-strong);border-radius:6px;background:#fff;color:var(--text);
+    border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);
   }
   .field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
   .field .hint{font-size:.72rem;color:var(--text-3);margin-top:4px}
@@ -96,8 +136,8 @@
     padding:8px 14px;border-radius:7px;cursor:pointer;width:100%;
   }
   .btn:hover{border-color:var(--text-3)}
-  .btn.primary{background:var(--text);border-color:var(--text);color:#fff}
-  .btn.primary:hover{background:#000}
+  .btn.primary{background:var(--text);border-color:var(--text);color:var(--bg)}
+  .btn.primary:hover{opacity:.88}
   .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   .content{
@@ -116,7 +156,7 @@
   .sp-table th{
     text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
     color:var(--text-3);padding:10px 12px;border-bottom:1px solid var(--border);
-    background:#fbfbfc;position:sticky;top:56px;z-index:10;
+    background:var(--surface-2);position:sticky;top:56px;z-index:10;
   }
   .sp-table td{
     padding:8px 12px;border-bottom:1px solid var(--border);
@@ -125,7 +165,7 @@
   .sp-table tr:last-child td{border-bottom:none}
   .sp-table tr.sp-row{cursor:pointer}
   .sp-table tr.sp-row:hover{background:var(--accent-soft)}
-  .sp-table tr.milestone td{background:#fbfbfc}
+  .sp-table tr.milestone td{background:var(--surface-2)}
   .sp-table tr.milestone:hover td{background:var(--accent-soft)}
   td.mono,th.num{font-family:var(--mono)}
   td.mono{font-size:.8rem;color:var(--text-2);white-space:nowrap}
@@ -146,16 +186,16 @@
     background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:3px;flex:none;
   }
   .copied-flash{animation:flash .6s ease}
-  @keyframes flash{0%{background:#dcfce7}100%{background:transparent}}
+  @keyframes flash{0%{background:var(--flash)}100%{background:transparent}}
 
   /* ---------- Type scale ---------- */
   .ts-rows{padding:8px 0}
   .ts-row{
     display:flex;align-items:baseline;gap:20px;
-    padding:10px 20px;border-bottom:1px solid #f0f0f3;
+    padding:10px 20px;border-bottom:1px solid var(--border-soft);
   }
   .ts-row:last-child{border-bottom:none}
-  .ts-row:hover{background:#fbfbfc}
+  .ts-row:hover{background:var(--surface-2)}
   .ts-meta{
     flex:none;width:150px;text-align:right;
     font-family:var(--mono);font-size:.75rem;color:var(--text-3);
@@ -174,7 +214,7 @@
   /* toast */
   #toast{
     position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
-    background:var(--text);color:#fff;font-size:.82rem;font-weight:500;
+    background:var(--text);color:var(--bg);font-size:.82rem;font-weight:500;
     padding:9px 16px;border-radius:8px;opacity:0;transition:.25s ease;pointer-events:none;z-index:100;
     font-family:var(--mono);
   }
@@ -217,6 +257,15 @@
       <button class="tab-btn active" role="tab" data-tab="spacing" aria-selected="true">Spacing Grid</button>
       <button class="tab-btn" role="tab" data-tab="type" aria-selected="false">Type Scale</button>
     </nav>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -461,6 +510,13 @@
     });
     return function(){ return $('button.active',el).dataset.v; };
   }
+
+  /* ---------- theme toggle ---------- */
+  $('#theme-toggle').addEventListener('click',function(){
+    var next = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('theme', next); }catch(e){}
+  });
 
   /* ---------- tabs ---------- */
   $$('.tab-btn').forEach(function(btn){
