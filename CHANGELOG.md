@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.4.0] - 2026-07-28
+
+### Added
+- Hash deep-linking for tabs — `index.html#spacing|type|gates|playbook` opens directly on that tool, and switching tabs updates the URL, so a specific tool can be shared/bookmarked (works offline too). Clicks, deep-links and browser back/forward all go through the hash. An unknown hash falls back to the first tab.
+
 ## [2.3.1] - 2026-07-28
 
 ### Changed

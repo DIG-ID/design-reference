@@ -19,6 +19,8 @@ Cada tool tem o seu contentor de print (`#gc-print`, `#cp-print`); cada handler 
 
 Os ficheiros JS das ferramentas são `defer` e dependem do `window.DR` do `utils.js` (que carrega primeiro).
 
+Navegação single-page com **deep-linking por hash** (`app.js`): `#spacing|type|gates|playbook` seleciona a tab; cliques e back/forward passam todos pelo `hashchange`. Decisão consciente de não separar em HTMLs distintos — sem build step, o shell teria de ser duplicado (partials por `fetch` não funcionam via `file://`).
+
 ## Regras
 - Zero dependências externas / CDNs — tem de funcionar 100% offline (sem servidor, por `file://`)
 - Só system fonts
