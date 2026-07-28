@@ -26,11 +26,11 @@
    * ============================================================ */
   var SETUP = {
     id: 'setup', title: 'Project setup', short: 'Decide these once for the whole site — before any page is written.',
-    guide: 'Before touching a single page, lock the decisions that apply to the entire site. If these aren’t settled, every page re-litigates them and the tone drifts. You are the owner here: get them in writing so the client and the team can’t quietly change them later.',
-    why: 'Most content chaos comes from skipping this: no agreed sitemap, no tone, no decision on formality — so ten pages end up in ten voices and content arrives as scattered, unstructured fragments.',
+    guide: 'Before working on any page, settle the decisions that apply to the whole site. If they are not settled, every page reopens them and the tone drifts. As the content owner, record them in writing so they are not changed informally later.',
+    why: 'Most content problems come from skipping this step: with no agreed sitemap, tone or formality decision, ten pages end up in ten voices and content arrives as scattered, unstructured fragments.',
     example: {
-      bad: '“We’ll figure out the tone as we go.” German pages mix formal *Sie* and casual *du*, and content trickles in through scattered emails, chat messages and half-finished documents.',
-      good: 'One page of tone guide (“warm, concrete, second person; *Sie* across the whole DE site”), an agreed & signed sitemap, and a content brief template the client fills in one place.'
+      bad: '“We will decide the tone later.” German pages mix formal *Sie* and informal *du*, and content arrives through scattered emails, chat messages and unfinished documents.',
+      good: 'A one-page tone guide (“warm, concrete, second person; *Sie* across the whole DE site”), a signed sitemap, and a content brief the client completes in one place.'
     },
     items: [
       { id: 'set-scope', label: 'Copywriting scope is decided and in writing', desc: 'We write / client writes to a brief / subcontracted — with responsibilities and deadlines in the proposal.' },
@@ -44,21 +44,21 @@
     ],
     /* Practical guidance on collecting content from the client with the least friction. */
     tips: [
-      'Ask for facts and bullet points, not finished copy — you distil and write. The client knows the business; the words are your job.',
-      'Never hand over a blank page. Send the "Client brief" export from this tool: one structured document, one section per page.',
-      'Collect in one place, not scattered across emails and chat messages.',
-      'Reuse what already exists — current site, brochures, Figma text — and mine it yourself instead of asking the client to rewrite.',
-      'Include one filled example page so the client sees the shape expected.',
-      'Set a deadline per batch and cap the revision rounds up front.'
+      'Ask for facts and bullet points, not finished copy. The client knows the business; writing the copy is your job.',
+      'Do not hand over a blank page. Send the “Client brief” export from this tool: one structured document, one section per page.',
+      'Collect everything in one place, not scattered across emails and chat messages.',
+      'Reuse what already exists — current site, brochures, Figma text — and review it yourself rather than asking the client to rewrite.',
+      'Include one completed example page so the client can see the expected format.',
+      'Set a deadline per batch and agree the number of revision rounds in advance.'
     ],
-    deliverable: 'A short tone guide, a signed sitemap, and the client brief sent (with a filled example).'
+    deliverable: 'A short tone guide, a signed sitemap, and the client brief sent (with a completed example).'
   };
 
   var STAGES = [
     {
       id: 'prepare', title: 'Prepare the page', short: 'Before you write a word.',
-      guide: 'Decide the job of the page before writing it. One dominant goal, one main audience, one primary action, one primary keyword. Fill the worksheet below — if you can’t answer those lines, the page isn’t ready to write, and writing anyway is how you get generic copy that ranks for nothing and converts no one.',
-      why: 'A page that tries to do everything does nothing. Naming the goal and audience first is what makes the copy specific enough to work.',
+      guide: 'Decide the purpose of the page before writing it: one main goal, one main audience, one primary action, one primary keyword. Complete the worksheet below — if you cannot answer these, the page is not ready to write, and writing it anyway produces generic copy that ranks for nothing and converts no one.',
+      why: 'A page that tries to do everything achieves nothing. Defining the goal and audience first is what makes the copy specific enough to work.',
       example: {
         bad: '“Welcome to our hotel. We have rooms, a restaurant, a spa and a great location for your stay.” — no goal, no audience, no next step.',
         good: 'Goal: convert · Audience: corporate/MICE · Action: Check availability · Keyword: “business hotel Lucerne”. Now the copy can be about exactly that.'
@@ -69,15 +69,15 @@
         { id: 'prep-action', label: 'Primary conversion action chosen', desc: 'Book now, Check availability, Request offer, Call.' },
         { id: 'prep-keyword', label: 'Primary keyword + search intent assigned', desc: 'From keyword research, not a guess.' },
         { id: 'prep-support', label: '1–3 supporting keywords / entities noted' },
-        { id: 'prep-competitors', label: 'Glanced at what the top 3 ranking pages cover' }
+        { id: 'prep-competitors', label: 'Reviewed what the top 3 ranking pages cover' }
       ],
-      deliverable: 'A filled, approved worksheet for the page (below) before writing starts.',
+      deliverable: 'A completed, approved worksheet for the page (below) before writing starts.',
       sheet: true
     },
     {
       id: 'write', title: 'Write the copy', short: 'Message, structure and voice.',
-      guide: 'One clear message per page, stated where the eye lands first. Lead with the benefit to the reader, not the feature spec. Keep blocks short and scannable — subheads, 2–4 line paragraphs, bullets. Write in active voice, second person (“you”), concrete language. Apply the tone and formality you decided in Setup.',
-      why: 'People scan before they read. Giant text blocks and feature lists lose them before your best line.',
+      guide: 'One clear message per page, placed where readers look first. Lead with the benefit to the reader, not the feature specification. Keep blocks short and scannable — subheadings, paragraphs of 2–4 lines, bullet points. Write in the active voice, second person (“you”), with concrete language. Apply the tone and formality decided in Setup.',
+      why: 'Readers scan before they read; long blocks of text and feature lists lose them before they reach your best line.',
       example: {
         bad: '“Our rooms are 40 m² and feature air conditioning, a minibar and a flat-screen TV.”',
         good: '“Room to actually breathe — 40 m² to spread out, work, and still relax. Air-con, minibar, big-screen TV as standard.”'
@@ -86,16 +86,16 @@
         { id: 'wr-message', label: 'One clear message — what should the visitor think, feel and do?' },
         { id: 'wr-valueprop', label: 'Value proposition sits above the fold', desc: 'Why this hotel, in one line.' },
         { id: 'wr-benefits', label: 'Benefits before features' },
-        { id: 'wr-scannable', label: 'Scannable: short paragraphs, subheads, bullets' },
+        { id: 'wr-scannable', label: 'Scannable: short paragraphs, subheadings, bullet points' },
         { id: 'wr-voice', label: 'Active voice, second person, concrete language' },
         { id: 'wr-terms', label: 'Consistent terminology (decided once: rooms vs suites, guests vs visitors)' },
-        { id: 'wr-open', label: 'Opening line earns the next — no throat-clearing intro' }
+        { id: 'wr-open', label: 'The opening line leads directly into the content — no filler introduction' }
       ],
       deliverable: 'Draft copy per page in the agreed submission format — a shared document or the brief template, in one place rather than scattered across emails and chats.'
     },
     {
       id: 'seo', title: 'SEO', short: 'Make it findable without stuffing.',
-      guide: 'Write the title tag and meta description as ads for the page. Use exactly one H1 and a logical H2 → H3 order (no skipped levels, no decorative headings). Link to your money pages with descriptive anchors, give images real alt text, and add structured data where it fits. Match depth to intent — a room page isn’t a 2,000-word essay.',
+      guide: 'Treat the title tag and meta description as the page’s advert in search results. Use exactly one H1 and a logical H2 → H3 order (no skipped levels, no decorative headings). Link to your key pages with descriptive anchors, give images meaningful alt text, and add structured data where relevant. Match depth to intent — a room page is not a 2,000-word essay.',
       why: 'The title and meta are often the only copy a searcher reads before deciding to click. Clean headings and internal links tell Google what the page is for.',
       example: {
         bad: 'Title: “Home | Welcome to the best hotel in the region for everyone”. Three H1s, no internal links.',
@@ -106,7 +106,7 @@
         { id: 'seo-meta', label: 'Meta description — ~140–155 chars, with a reason to click' },
         { id: 'seo-h1', label: 'Exactly one H1, then a logical H2 → H3 hierarchy' },
         { id: 'seo-slug', label: 'URL slug short, keyword, hyphenated, no stopwords' },
-        { id: 'seo-internal', label: 'Internal links to money pages with descriptive anchor text' },
+        { id: 'seo-internal', label: 'Internal links to key pages (rooms, booking, offers) with descriptive anchor text' },
         { id: 'seo-alt', label: 'Image alt text descriptive, keyword only where natural' },
         { id: 'seo-schema', label: 'Structured data where relevant', desc: 'Hotel / LodgingBusiness, LocalBusiness, FAQPage, BreadcrumbList, Offer.' },
         { id: 'seo-cannibal', label: 'No two pages (or languages) fighting for the same keyword' }
@@ -116,7 +116,7 @@
     {
       id: 'convert', title: 'Convert', short: 'Give every page a clear next step.',
       guide: 'One primary call to action per page, unmistakable, above the fold and repeated further down. Keep the booking path one click away. Back it with honest trust signals (ratings, real photos, awards) and keep forms as short as possible. No page should be a dead end — always point somewhere useful next.',
-      why: 'Great copy with no obvious next step wastes the visit. Competing buttons are as bad as none.',
+      why: 'Strong copy with no clear next step wastes the visit, and competing buttons are as ineffective as none.',
       example: {
         bad: 'Page ends with a paragraph and no next step — or five equal-weight buttons competing for the click.',
         good: 'One “Check availability” above the fold, repeated near the end, plus a phone number and a real review snippet.'
@@ -126,16 +126,16 @@
         { id: 'cv-repeat', label: 'CTA visible above the fold and repeated further down' },
         { id: 'cv-booking', label: 'Booking path is one click away' },
         { id: 'cv-trust', label: 'Trust signals present (ratings, reviews, awards, real photos)' },
-        { id: 'cv-urgency', label: 'Urgency/scarcity only where it’s actually true' },
+        { id: 'cv-urgency', label: 'Urgency/scarcity only where it is genuinely true' },
         { id: 'cv-forms', label: 'Forms as short as legally/operationally possible' },
         { id: 'cv-deadend', label: 'No dead ends — every page points somewhere useful next' }
       ],
       deliverable: 'A defined primary CTA and next step for each page.'
     },
     {
-      id: 'legal', title: 'Legal & compliance (DACH)', short: 'The stuff that’s legally required in DE/AT/CH.',
-      guide: 'Make sure the Impressum is present and correct, the privacy/cookie consent is aligned with no tags firing before consent, and the legal entity details are right. Clear image and font licensing, meet accessibility basics (increasingly a legal requirement in the EU), and keep pricing/offer claims accurate. When unsure, flag it to whoever owns legal — don’t guess.',
-      why: 'In the DACH region these aren’t nice-to-haves; a missing Impressum or pre-consent tracking is a real legal risk.',
+      id: 'legal', title: 'Legal & compliance (DACH)', short: 'What is legally required in DE/AT/CH.',
+      guide: 'Make sure the Impressum is present and correct, the privacy/cookie consent is aligned with no tags firing before consent, and the legal entity details are right. Clear image and font licensing, meet accessibility basics (increasingly a legal requirement in the EU), and keep pricing/offer claims accurate. When in doubt, raise it with whoever owns legal rather than guessing.',
+      why: 'In the DACH region these are not optional; a missing Impressum or tracking that fires before consent is a real legal risk.',
       example: {
         bad: 'Analytics fires on page load before consent; “best prices guaranteed” with nothing to back it.',
         good: 'Tags gated behind consent in the tag manager; claims accurate and dated; Impressum linked in the footer.'
@@ -151,12 +151,12 @@
       deliverable: 'A short compliance note per page/site, with anything risky flagged to legal.'
     },
     {
-      id: 'qa', title: 'QA & handoff', short: 'Finish clean and package the deliverables.',
-      guide: 'Proofread each language with a native speaker — not an auto-translation. Remove every placeholder, lorem ipsum and “TODO”. Check all links, read the page on mobile, and keep formatting consistent per locale (capitalisation, dates, numbers). Then get the Approver’s explicit yes, and hand off the package: worksheet + approved copy + SEO fields + compliance note.',
-      why: 'The last 5% — a leftover “TODO: pricing”, a broken link, a non-native proofread — is what the client actually notices.',
+      id: 'qa', title: 'QA & handoff', short: 'Finish cleanly and package the deliverables.',
+      guide: 'Proofread each language with a native speaker — not an automated translation. Remove every placeholder, lorem ipsum and “TODO”. Check all links, read the page on mobile, and keep formatting consistent per locale (capitalisation, dates, numbers). Then obtain the Approver’s explicit sign-off, and hand over the package: worksheet + approved copy + SEO fields + compliance note.',
+      why: 'The final details — a leftover “TODO: pricing”, a broken link, a proofread not done by a native speaker — are what the client notices first.',
       example: {
-        bad: 'Page goes live with “TODO: add pricing” still in it and a German text proofread by a non-native.',
-        good: 'Native proofread done, links checked, mobile read, Approver ticked, and the full content package handed over.'
+        bad: 'The page goes live with “TODO: add pricing” still in it, and the German text was proofread by a non-native speaker.',
+        good: 'Native proofread completed, links checked, page read on mobile, Approver signed off, and the full content package handed over.'
       },
       items: [
         { id: 'qa-proof', label: 'Proofread by a native speaker per language' },

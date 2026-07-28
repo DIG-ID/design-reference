@@ -46,7 +46,7 @@
     {
       id: 'content',
       title: 'Content',
-      blurb: 'The heart of the playbook (Part A). Run it per page: strategy, copy quality, SEO, conversion, brand/tone and DACH legal — then get the Approver’s sign-off.',
+      blurb: 'The core of the playbook (Part A). Run it per page: strategy, copy quality, SEO, conversion, brand/tone and DACH legal — then obtain the Approver’s sign-off.',
       groups: [
         { title: 'Strategy (before writing a word)', items: [
           { id: 'content-goal',       label: 'Primary goal defined (inform / convert / rank / support)', description: 'Pick one dominant goal per page.', required: true },
@@ -61,7 +61,7 @@
           { id: 'content-message',    label: 'One clear message per page', description: 'What should the visitor think, feel and do?', required: true },
           { id: 'content-valueprop',  label: 'Value proposition above the fold', description: 'Why this hotel, in one line.', required: true },
           { id: 'content-benefits',   label: 'Benefits before features', required: false },
-          { id: 'content-scannable',  label: 'Scannable: short paragraphs, subheads, bullets', description: 'Kills the giant text blocks.', required: false },
+          { id: 'content-scannable',  label: 'Scannable: short paragraphs, subheadings, bullet points', description: 'Avoids large, unbroken blocks of text.', required: false },
           { id: 'content-voice',      label: 'Active voice, second person, concrete language', required: false },
           { id: 'content-terms',      label: 'Consistent terminology across pages', required: false }
         ]},
@@ -70,7 +70,7 @@
           { id: 'content-meta',       label: 'Meta description — ~140–155 chars, with a reason to click', required: true },
           { id: 'content-h1',         label: 'Exactly one H1, then a logical H2 → H3 hierarchy', required: true },
           { id: 'content-slug',       label: 'URL slug short, keyword, hyphenated, no stopwords', required: false },
-          { id: 'content-internal',   label: 'Internal links to money pages with descriptive anchors', required: false },
+          { id: 'content-internal',   label: 'Internal links to key pages (rooms, booking, offers) with descriptive anchors', required: false },
           { id: 'content-alt',        label: 'Image alt text descriptive, never stuffed', required: false },
           { id: 'content-schema',     label: 'Structured data where relevant', description: 'Hotel / LodgingBusiness, LocalBusiness, FAQPage, BreadcrumbList, Offer.', required: false },
           { id: 'content-cannibal',   label: 'No keyword cannibalisation between pages or languages', required: false }
@@ -132,7 +132,7 @@
     {
       id: 'prelaunch',
       title: 'Pre-launch QA',
-      blurb: 'Last check before go-live: links, native proofread, no placeholders, mobile read, and DACH legal/compliance — then final sign-off.',
+      blurb: 'Final check before go-live: links, native proofread, no placeholders, mobile read, and DACH legal/compliance — then final sign-off.',
       groups: [
         { title: 'Content & links', items: [
           { id: 'qa-links',           label: 'All links work; no orphan pages', required: true },
@@ -153,7 +153,7 @@
     {
       id: 'golive',
       title: 'Go-live',
-      blurb: 'Flip the switch cleanly: redirects, indexing, analytics, backups and monitoring in place.',
+      blurb: 'Launch cleanly: redirects, indexing, analytics, backups and monitoring in place.',
       groups: [
         { title: 'Launch gate', items: [
           { id: 'live-redirects',     label: 'Redirects in place (old → new URLs)', required: true },
@@ -288,7 +288,7 @@
     var idx = PHASES.map(function(p){ return p.id; }).indexOf(phase.id);
     var prev = idx > 0 ? PHASES[idx - 1] : null;
     var warn = (prev && !state.closed[prev.id] && !closed)
-      ? '<p class="gc-warn">Heads-up: “' + escapeHtml(prev.title) + '” isn’t closed yet. Gates are advisory, so you can still work here — but the workflow expects the previous gate closed first.</p>'
+      ? '<p class="gc-warn">Note: “' + escapeHtml(prev.title) + '” is not closed yet. Gates are advisory, so you can continue, but the workflow expects the previous gate to be closed first.</p>'
       : '';
 
     var notes = escapeHtml(state.notes[phase.id] || '');

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.3.1] - 2026-07-28
+
+### Changed
+- Editorial pass on the Gate Checklist and Content Playbook copy: neutral, professional and uniform en-EN register, idioms removed and phrasing simplified for non-native readers ("money pages" → "key pages", "subheads" → "subheadings", etc.). No behaviour change. All strings live in the tools' data models to ease future localisation (e.g. de-CH).
+
 ## [2.3.0] - 2026-07-28
 
 ### Added
