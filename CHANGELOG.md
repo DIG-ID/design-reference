@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.0.1] - 2026-07-28
+
+### Added
+- `TODO.md` with a curated backlog of future ideas (new tools, persistence, export formats, a11y).
+- `versioning` project skill (`.claude/skills/versioning/`) that inspects the diff, picks the SemVer bump, writes the CHANGELOG entry and commits (no co-author).
+
 ## [2.0.0] - 2026-07-28
 
 ### Changed
