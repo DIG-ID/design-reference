@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.2.0] - 2026-07-28
+
+### Added
+- **Content Playbook** tab — a personal do-and-deliver guide for whoever owns content on a project (content lead / copywriter), written to be usable even by non-copywriters.
+  - Project setup (decide once) plus per-page stages (Prepare → Write → SEO → Convert → Legal → QA & handoff) as a sub-navigation stepper.
+  - Each stage has a plain-language guide ("what good looks like" + why it matters), a good-vs-bad example, a checklist of do's, and a clear deliverable.
+  - Per-page worksheet (Part C: goal, audience, message, CTA, title, meta, H1…), with multiple named pages, each saved in `localStorage`.
+  - Export a page's handoff (worksheet + checklist state) as Markdown or a print/PDF sheet.
+
+### Fixed
+- Print handlers now clear the other tool's report container before printing, so a stale report can't print alongside the current one.
+
 ## [2.1.0] - 2026-07-28
 
 ### Added

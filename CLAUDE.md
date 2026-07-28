@@ -1,16 +1,21 @@
 # Design Reference Tool
 
-Ferramenta offline (modular, sem build) com três tabs:
+Ferramenta offline (modular, sem build) com quatro tabs:
 1. **Spacing Grid** — escala de espaçamento 4pt/8pt com px/rem/pt, copy-on-click, export CSS vars
 2. **Type Scale** — gerador de escala tipográfica (ratio, base size, REM/PX/PT), estilo typescale.com
-3. **Gate Checklist** — checklist gated para projetos web; sub-navegação por fases (Kickoff → Go-live), gates informativos (BLOCKED/READY), fechar/reabrir fase com registo, notas, estado em localStorage, export Markdown + print. Conteúdo vem de `website-content-checklist.md`.
+3. **Gate Checklist** — checklist gated para projetos web (visão PM/team); sub-navegação por fases (Kickoff → Go-live), gates informativos (BLOCKED/READY), fechar/reabrir fase com registo, notas, estado em localStorage, export Markdown + print.
+4. **Content Playbook** — guia pessoal do-e-entrega para quem é responsável pelo conteúdo (content lead/copywriter, mesmo sem ser do ofício). Setup do projeto + fases por página (Prepare → QA); cada passo tem guia ("what good looks like" + porquê), exemplo bom/mau, checklist e deliverable. Worksheet por página (Part C) preenchível, múltiplas páginas, export Markdown + print.
+
+As tabs 3 e 4 partilham conteúdo com origem em `website-content-checklist.md`.
 
 ## Arquitetura
 Estrutura modular, sem build step (scripts clássicos + `window.DR`), para continuar a funcionar por duplo-clique via `file://`. As pastas `css/` e `js/` têm de viajar sempre ao lado do `index.html`.
 
 - `index.html` — só markup + `<link>`/`<script>` para os ficheiros externos
-- `css/` — `base.css` (tokens/temas/reset), `layout.css` (shell/tabs/grid), `components.css` (campos, segmented, botões, toast, modal), `spacing.css`, `type-scale.css`, `gate-checklist.css` (inclui CSS de print do relatório)
-- `js/` — `theme-init.js` (aplica tema antes do 1º paint, síncrono no `<head>`), `utils.js` (namespace `window.DR`: helpers partilhados), `app.js` (tema/tabs/modal), `spacing.js` (Spacing Grid), `type-scale.js` (Type Scale), `gate-checklist.js` (Gate Checklist — data model das fases no topo do ficheiro)
+- `css/` — `base.css` (tokens/temas/reset), `layout.css` (shell/tabs/grid), `components.css` (campos, segmented, botões, toast, modal), `spacing.css`, `type-scale.css`, `gate-checklist.css`, `content-playbook.css` (as duas últimas incluem CSS de print)
+- `js/` — `theme-init.js` (aplica tema antes do 1º paint, síncrono no `<head>`), `utils.js` (namespace `window.DR`: helpers partilhados), `app.js` (tema/tabs/modal), `spacing.js` (Spacing Grid), `type-scale.js` (Type Scale), `gate-checklist.js` (Gate Checklist), `content-playbook.js` (Content Playbook — conteúdo do guia no data model no topo do ficheiro)
+
+Cada tool tem o seu contentor de print (`#gc-print`, `#cp-print`); cada handler de print limpa o do outro antes de `window.print()`.
 
 Os ficheiros JS das ferramentas são `defer` e dependem do `window.DR` do `utils.js` (que carrega primeiro).
 

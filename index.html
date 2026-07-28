@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/spacing.css">
 <link rel="stylesheet" href="css/type-scale.css">
 <link rel="stylesheet" href="css/gate-checklist.css">
+<link rel="stylesheet" href="css/content-playbook.css">
 </head>
 <body>
 
@@ -27,6 +28,7 @@
       <button class="tab-btn active" role="tab" data-tab="spacing" aria-selected="true">Spacing Grid</button>
       <button class="tab-btn" role="tab" data-tab="type" aria-selected="false">Type Scale</button>
       <button class="tab-btn" role="tab" data-tab="gates" aria-selected="false">Gate Checklist</button>
+      <button class="tab-btn" role="tab" data-tab="playbook" aria-selected="false">Content Playbook</button>
     </nav>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -297,6 +299,37 @@
   </div>
 </section>
 
+<!-- ============ CONTENT PLAYBOOK ============ -->
+<section id="panel-playbook" class="panel">
+  <div class="cp-topbar">
+    <div class="cp-pagebar" id="cp-pagebar">
+      <label for="cp-page">Page</label>
+      <select id="cp-page" class="pv-select"></select>
+      <button class="btn" id="cp-new">New page</button>
+      <button class="btn" id="cp-del">Delete</button>
+    </div>
+    <div class="cp-actions">
+      <button class="btn" id="cp-print-btn">Print page</button>
+      <button class="btn" id="cp-copy">Copy as Markdown</button>
+    </div>
+  </div>
+
+  <nav class="gc-steps" id="cp-steps" role="tablist" aria-label="Content stages"></nav>
+
+  <div class="content">
+    <div class="content-head">
+      <div>
+        <h3 id="cp-title"></h3>
+        <div class="sub" id="cp-short"></div>
+      </div>
+      <div class="head-controls">
+        <span class="gc-badge" id="cp-progress" role="status"></span>
+      </div>
+    </div>
+    <div class="cp-body" id="cp-body"></div>
+  </div>
+</section>
+
 </main>
 
 <div id="toast" role="status"></div>
@@ -321,9 +354,11 @@
 <script defer src="js/spacing.js"></script>
 <script defer src="js/type-scale.js"></script>
 <script defer src="js/gate-checklist.js"></script>
+<script defer src="js/content-playbook.js"></script>
 
-<!-- Print-only report target, populated by the Gate Checklist tool. -->
+<!-- Print-only report targets, populated by their tools (cleared on each other's print). -->
 <div id="gc-print" aria-hidden="true"></div>
+<div id="cp-print" aria-hidden="true"></div>
 
 </body>
 </html>

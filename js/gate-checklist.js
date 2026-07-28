@@ -427,6 +427,7 @@
     DR.openModal('Gate Checklist — report (Markdown)', toMarkdown());
   });
   $('#gc-print-btn').addEventListener('click', function(){
+    var cp = document.getElementById('cp-print'); if(cp) cp.innerHTML = ''; // avoid printing the other tool's stale report
     $('#gc-print').innerHTML = toReportHtml();
     window.print();
   });
