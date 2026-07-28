@@ -1,0 +1,36 @@
+/* Spacing Grid tool: values table with bar/square size previews. */
+
+.sp-table{width:100%;border-collapse:collapse}
+.sp-table th{
+  text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--text-3);padding:10px 12px;border-bottom:1px solid var(--border);
+  background:var(--surface-2);position:sticky;top:56px;z-index:10;
+}
+.sp-table td{
+  padding:8px 12px;border-bottom:1px solid var(--border);
+  font-size:.85rem;vertical-align:middle;
+}
+.sp-table tr:last-child td{border-bottom:none}
+.sp-table tr.sp-row{cursor:pointer}
+.sp-table tr.sp-row:hover{background:var(--accent-soft)}
+.sp-table tr.milestone td{background:var(--surface-2)}
+.sp-table tr.milestone:hover td{background:var(--accent-soft)}
+td.mono,th.num{font-family:var(--mono)}
+td.mono{font-size:.8rem;color:var(--text-2);white-space:nowrap}
+td.mono b{color:var(--text);font-weight:600}
+.mult{font-family:var(--mono);font-size:.75rem;color:var(--text-3);white-space:nowrap}
+.bar-cell{width:45%}
+.bar{
+  height:14px;background:var(--accent);border-radius:3px;min-width:2px;
+  opacity:.85;
+}
+.bar-wrap{display:flex;align-items:center;gap:8px}
+.square{
+  background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:3px;flex:none;
+}
+.copied-flash{animation:flash .6s ease}
+@keyframes flash{0%{background:var(--flash)}100%{background:transparent}}
+
+@media (max-width:900px){
+  .bar-cell{width:30%}
+}

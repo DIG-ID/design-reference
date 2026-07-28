@@ -1,0 +1,97 @@
+/* Type Scale tool: scale list, resizable split panes and the live page preview. */
+
+/* ---------- Scale list ---------- */
+.ts-rows{padding:8px 0}
+.ts-row{
+  display:flex;align-items:baseline;gap:20px;
+  padding:10px 20px;border-bottom:1px solid var(--border-soft);
+}
+.ts-row:last-child{border-bottom:none}
+.ts-row:hover{background:var(--surface-2)}
+.ts-meta{
+  flex:none;width:150px;text-align:right;
+  font-family:var(--mono);font-size:.75rem;color:var(--text-3);
+  display:flex;justify-content:flex-end;align-items:baseline;gap:10px;
+  cursor:pointer;user-select:none;
+}
+.ts-meta:hover .ts-size{color:var(--accent)}
+.ts-tag{font-weight:700;color:var(--text-2)}
+.ts-size{white-space:nowrap}
+.ts-sample{
+  flex:1;min-width:0;white-space:nowrap;overflow:hidden;
+  outline:none;
+}
+.ts-sample:focus{outline:2px dashed var(--border-strong);outline-offset:2px;border-radius:4px}
+
+/* ---------- Split panes + resizable splitter ---------- */
+.ts-split{display:flex;height:calc(100vh - 104px);min-height:420px}
+.ts-split.below{flex-direction:column}
+.ts-split.side{flex-direction:row}
+.ts-pane{display:flex;flex-direction:column;min-width:0;min-height:0}
+.ts-pane .content-head{flex:none}
+#ts-scale-box{flex:0 1 var(--split,50%)}
+#pv-box{flex:1 1 0}
+.ts-rows{flex:1;overflow:auto}
+#ts-splitter{flex:none;display:flex;align-items:center;justify-content:center;touch-action:none}
+.below>#ts-splitter{height:14px;cursor:row-resize}
+.side>#ts-splitter{width:14px;cursor:col-resize}
+#ts-splitter .grip{background:var(--border-strong);border-radius:99px;pointer-events:none}
+.below>#ts-splitter .grip{width:44px;height:4px}
+.side>#ts-splitter .grip{width:4px;height:44px}
+#ts-splitter:hover .grip,#ts-splitter.dragging .grip{background:var(--accent)}
+#ts-splitter:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:6px}
+
+/* ---------- Page preview (landing / blog) ---------- */
+#ts-preview{flex:1;overflow:auto;padding:20px;background:var(--bg)}
+#ts-preview.fullscreen{position:fixed;inset:0;z-index:80;padding:24px}
+.pv-close{display:none;position:fixed;top:16px;right:16px;z-index:81;width:auto;align-items:center;gap:8px}
+#ts-preview.fullscreen .pv-close{display:inline-flex}
+.pv-close svg{width:14px;height:14px;flex:none}
+.pv-frame{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:0 auto;overflow:hidden}
+.pv-frame.mobile{width:375px;max-width:100%}
+
+.pv-page{
+  font-family:var(--pv-body-font);font-weight:var(--pv-body-weight);
+  line-height:var(--pv-body-lh);font-size:var(--pv-p);color:var(--text);
+  padding:32px;overflow-wrap:break-word;
+}
+.pv-frame.mobile .pv-page{padding:20px}
+.pv-page h1,.pv-page h2,.pv-page h3{
+  font-family:var(--pv-head-font);font-weight:var(--pv-head-weight);
+  line-height:var(--pv-head-lh);letter-spacing:var(--pv-head-ls);margin:0 0 .45em;
+}
+.pv-page h1{font-size:var(--pv-h1)}
+.pv-page h2{font-size:var(--pv-h2);margin-top:1.6em}
+.pv-page h3{font-size:var(--pv-h3)}
+.pv-page p{margin:0 0 1em}
+.pv-page small{font-size:var(--pv-small);color:var(--text-3)}
+.pv-page ul{margin:0 0 1em 1.2em;padding:0}
+.pv-page li{margin-bottom:.4em}
+.pv-page blockquote{
+  margin:1.4em 0;padding:.2em 0 .2em 1em;border-left:3px solid var(--accent);
+  color:var(--text-2);font-size:var(--pv-h6);
+}
+.pv-nav{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.pv-nav span{font-size:var(--pv-small);color:var(--text-2)}
+.pv-hero{text-align:center;max-width:640px;margin:0 auto 56px}
+.pv-hero p{color:var(--text-2)}
+.pv-btn{
+  display:inline-block;font-size:var(--pv-small);font-weight:600;
+  border:1px solid var(--border-strong);border-radius:8px;padding:.6em 1.1em;margin:0 4px;
+}
+.pv-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.pv-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:1.2em}
+.pv-cards>div{border:1px solid var(--border);border-radius:8px;padding:18px}
+.pv-cards p{margin:0;color:var(--text-2);font-size:var(--pv-small)}
+.pv-foot{border-top:1px solid var(--border);margin-top:48px;padding-top:20px}
+.pv-article{max-width:640px;margin:0 auto}
+.pv-lede{font-size:var(--pv-h6);color:var(--text-2)}
+
+@media (max-width:900px){
+  .ts-meta{width:110px}
+  /* stack the split panes and drop the splitter on small screens */
+  .ts-split,.ts-split.side{flex-direction:column;height:auto;min-height:0}
+  #ts-splitter{display:none}
+  #ts-scale-box{flex:none}
+  .ts-rows{max-height:50vh}
+}

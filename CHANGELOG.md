@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.0.0] - 2026-07-28
+
+### Changed
+- **Modular architecture** — the single `index.html` was split into external files (no build step, still 100% offline via classic scripts + `window.DR`). The `css/` and `js/` folders must now travel alongside `index.html`.
+  - `css/`: `base.css` (tokens, themes, reset), `layout.css` (app shell, tabs, grid), `components.css` (fields, segmented controls, buttons, toast, modal), `spacing.css`, `type-scale.css`.
+  - `js/`: `theme-init.js` (pre-paint theme), `utils.js` (shared `window.DR` helpers), `app.js` (theme/tabs/modal), `spacing.js`, `type-scale.js`.
+
+### Added
+- Skip-to-content link for keyboard users and `aria-labelledby` on the export dialog.
+- `DR.escapeHtml` helper; type-scale sample text is now escaped before injection.
+
 ## [1.4.0] - 2026-07-21
 
 ### Added

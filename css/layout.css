@@ -1,0 +1,67 @@
+/* App shell layout: skip link, top bar, tabs, main area and the sidebar + content grid. */
+
+/* Accessibility: skip link becomes visible on keyboard focus */
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--accent);color:#fff;font-size:.85rem;font-weight:600;
+  padding:8px 14px;border-radius:0 0 8px 0;
+}
+.skip-link:focus{left:0}
+
+/* ---------- Top bar / tabs ---------- */
+header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+}
+.topbar{
+  display:flex;align-items:center;gap:32px;
+  padding:0 24px;height:56px;
+}
+.brand{font-weight:700;font-size:.95rem;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--text-3);font-weight:500}
+nav{display:flex;gap:4px;height:100%}
+.tab-btn{
+  appearance:none;border:none;background:none;cursor:pointer;
+  font:inherit;font-size:.9rem;font-weight:500;color:var(--text-2);
+  padding:0 16px;height:100%;position:relative;
+}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--text);font-weight:600}
+.tab-btn.active::after{
+  content:"";position:absolute;left:12px;right:12px;bottom:-1px;
+  height:2px;background:var(--accent);border-radius:2px 2px 0 0;
+}
+.tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:6px}
+
+.theme-toggle{
+  margin-left:auto;appearance:none;cursor:pointer;
+  background:none;border:1px solid var(--border);border-radius:8px;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  color:var(--text-2);flex:none;
+}
+.theme-toggle:hover{color:var(--text);border-color:var(--border-strong)}
+.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.theme-toggle svg{width:16px;height:16px;display:block}
+[data-theme="dark"] .icon-moon{display:none}
+:root:not([data-theme="dark"]) .icon-sun{display:none}
+
+/* ---------- Main area / panels ---------- */
+main{padding:24px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ---------- Shared layout: sidebar + content ---------- */
+.tool{
+  display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;
+}
+.sidebar{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;position:sticky;top:80px;
+}
+.sidebar h2{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:16px}
+
+@media (max-width:900px){
+  .tool{grid-template-columns:1fr}
+  .sidebar{position:static}
+}

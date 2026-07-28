@@ -1,0 +1,45 @@
+/* Design tokens, light/dark themes, reset and base element styles. */
+
+:root{
+  --bg:#f7f7f8;
+  --surface:#ffffff;
+  --surface-2:#fbfbfc;
+  --border:#e4e4e9;
+  --border-soft:#f0f0f3;
+  --border-strong:#d0d0d8;
+  --text:#17171c;
+  --text-2:#5c5c66;
+  --text-3:#9a9aa4;
+  --accent:#2b4bd7;
+  --accent-soft:#eef1fd;
+  --flash:#dcfce7;
+  --mono:ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --radius:8px;
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --bg:#141417;
+  --surface:#1d1d22;
+  --surface-2:#222228;
+  --border:#2c2c34;
+  --border-soft:#26262d;
+  --border-strong:#3e3e48;
+  --text:#ececf1;
+  --text-2:#a5a5b0;
+  --text-3:#70707c;
+  --accent:#7e96f2;
+  --accent-soft:#232a45;
+  --flash:#1d3a2a;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
