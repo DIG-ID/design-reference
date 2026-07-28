@@ -23,7 +23,7 @@
 
 <header>
   <div class="topbar">
-    <div class="brand">Design Reference <span>· offline</span></div>
+    <div class="brand">Design Reference <span>· offline</span><span id="brand-ver"></span></div>
     <nav role="tablist">
       <button class="tab-btn active" role="tab" data-tab="spacing" aria-selected="true">Spacing Grid</button>
       <button class="tab-btn" role="tab" data-tab="type" aria-selected="false">Type Scale</button>
@@ -63,7 +63,19 @@
           <button data-v="curated" class="active">Design scale</button>
           <button data-v="all">All multiples</button>
         </div>
-        <div class="hint">Design scale = curated steps used in most design systems. All multiples = every step up to 256px.</div>
+        <div class="hint">Design scale = curated steps used in most design systems. All multiples = every step of the base unit.</div>
+      </div>
+      <div class="field">
+        <label for="sp-max">Max size</label>
+        <select id="sp-max">
+          <option value="512" selected>512px</option>
+          <option value="768">768px</option>
+          <option value="1024">1024px</option>
+          <option value="1280">1280px</option>
+          <option value="1536">1536px</option>
+          <option value="1920">1920px</option>
+        </select>
+        <div class="hint">Upper limit of the scale — raise it for container-scale spacing on large screens.</div>
       </div>
       <div class="field">
         <label>Preview shape</label>

@@ -27,3 +27,4 @@ Navegação single-page com **deep-linking por hash** (`app.js`): `#spacing|type
 - Vanilla JS, sem frameworks, sem ES modules (bloqueados por `file://`) — usar scripts clássicos e o namespace `window.DR`
 - Escapar sempre texto do utilizador (`DR.escapeHtml`) antes de injetar via `innerHTML`
 - Atualizar o `CHANGELOG.md` a cada alteração, seguindo SemVer (formato Keep a Changelog, ver regras no topo do ficheiro)
+- A versão é global (um só artefacto) e vive em `DR.VERSION` (`js/utils.js`), mostrada no header; bumpar sempre em conjunto com o `CHANGELOG.md`

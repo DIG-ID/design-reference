@@ -3,6 +3,10 @@
 window.DR = (function(){
   "use strict";
 
+  /* Single source of truth for the app version, shown in the header.
+     Bump this together with CHANGELOG.md on every release. */
+  var VERSION = '2.6.0';
+
   var REM = 16;               // 1rem = 16px
   var PX_TO_PT = 72 / 96;     // 0.75 (screen 96dpi)
 
@@ -58,6 +62,7 @@ window.DR = (function(){
   }
 
   return {
+    VERSION: VERSION,
     REM: REM,
     PX_TO_PT: PX_TO_PT,
     $: $,

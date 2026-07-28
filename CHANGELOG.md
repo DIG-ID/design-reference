@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.6.0] - 2026-07-28
+
+### Added
+- Spacing Grid: **Max size** control (512 → 1920px) so the scale can reach container-scale spacing on large screens. Both "Design scale" and "All multiples" respect it, and the curated scale gained container-scale steps (640…1920).
+- App version shown in the header (`· v2.6.0`), sourced from `DR.VERSION` in `js/utils.js`.
+
+### Fixed
+- Spacing Grid "All multiples" no longer stops at a hardcoded 256px (it now follows the Max size), removing the inconsistency with the curated scale.
+
+### Changed
+- Spacing Grid bars now scale relative to the selected max instead of a fixed 512px cap, so large values stay readable in the column.
+
 ## [2.5.0] - 2026-07-28
 
 ### Changed

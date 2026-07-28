@@ -3,6 +3,10 @@
   "use strict";
   var $ = DR.$, $$ = DR.$$;
 
+  /* ---------- version in the header ---------- */
+  var ver = $('#brand-ver');
+  if(ver) ver.textContent = ' · v' + DR.VERSION;
+
   /* ---------- theme toggle ---------- */
   $('#theme-toggle').addEventListener('click', function(){
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
