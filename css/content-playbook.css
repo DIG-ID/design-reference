@@ -9,8 +9,11 @@
 .cp-pagebar label{font-size:.78rem;font-weight:600;color:var(--text-2)}
 .cp-pagebar select{min-width:150px}
 .cp-pagebar.cp-dim{opacity:.5}
-.cp-actions{display:flex;gap:8px;flex-wrap:wrap}
+.cp-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .cp-topbar .btn{width:auto}
+/* divider between the "send to the client" action and the "your records" actions */
+.cp-actions-sep{width:1px;align-self:stretch;background:var(--border);margin:0 4px}
+@media (max-width:900px){ .cp-actions-sep{display:none} }
 
 /* ---------- Guide card ---------- */
 .cp-body{padding:20px}

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.4.2] - 2026-07-28
+
+### Changed
+- Content Playbook action buttons relabelled to make the audience clear: "Client brief" (to send to the client) is separated from "Print handoff" and "Copy handoff" (your own records), with explanatory tooltips and a divider. No behaviour change.
+
 ## [2.4.1] - 2026-07-28
 
 ### Fixed
