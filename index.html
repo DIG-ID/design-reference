@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/spacing.css">
 <link rel="stylesheet" href="css/type-scale.css">
+<link rel="stylesheet" href="css/gate-checklist.css">
 </head>
 <body>
 
@@ -25,6 +26,7 @@
     <nav role="tablist">
       <button class="tab-btn active" role="tab" data-tab="spacing" aria-selected="true">Spacing Grid</button>
       <button class="tab-btn" role="tab" data-tab="type" aria-selected="false">Type Scale</button>
+      <button class="tab-btn" role="tab" data-tab="gates" aria-selected="false">Gate Checklist</button>
     </nav>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -267,6 +269,34 @@
   </div>
 </section>
 
+<!-- ============ GATE CHECKLIST ============ -->
+<section id="panel-gates" class="panel">
+  <div class="gc-topbar">
+    <div class="gc-overview" id="gc-overview"></div>
+    <div class="gc-actions">
+      <button class="btn" id="gc-print-btn">Print report</button>
+      <button class="btn" id="gc-copy">Copy as Markdown</button>
+      <button class="btn" id="gc-reset">Reset</button>
+    </div>
+  </div>
+
+  <nav class="gc-steps" id="gc-steps" role="tablist" aria-label="Project phases"></nav>
+
+  <div class="content">
+    <div class="content-head">
+      <div>
+        <h3 id="gc-title"></h3>
+        <div class="sub" id="gc-blurb"></div>
+      </div>
+      <div class="head-controls">
+        <span class="gc-badge" id="gc-badge" role="status"></span>
+      </div>
+    </div>
+    <div class="gc-groups" id="gc-groups"></div>
+    <div class="gc-gate" id="gc-gate"></div>
+  </div>
+</section>
+
 </main>
 
 <div id="toast" role="status"></div>
@@ -290,6 +320,10 @@
 <script defer src="js/app.js"></script>
 <script defer src="js/spacing.js"></script>
 <script defer src="js/type-scale.js"></script>
+<script defer src="js/gate-checklist.js"></script>
+
+<!-- Print-only report target, populated by the Gate Checklist tool. -->
+<div id="gc-print" aria-hidden="true"></div>
 
 </body>
 </html>

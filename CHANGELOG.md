@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.1.0] - 2026-07-28
+
+### Added
+- **Gate Checklist** tab — an interactive gated checklist for web projects, sourced from `website-content-checklist.md`.
+  - Six ordered phases (Kickoff & Scope → Content → Design → Development → Pre-launch QA → Go-live) as a sub-navigation stepper below the main nav.
+  - Each phase shows a checklist grouped by section, with required (gating) vs recommended items, live progress (x/y required) and an advisory gate status (BLOCKED / READY TO CLOSE).
+  - Close a phase with a "closed by" name + timestamp for sign-off, and reopen it; an advisory heads-up when the previous phase isn't closed yet (never hard-blocked).
+  - Optional notes per phase; state persisted per run in `localStorage` with a Reset action.
+  - Export the report as Markdown or as a print/PDF-friendly document.
+
 ## [2.0.1] - 2026-07-28
 
 ### Added

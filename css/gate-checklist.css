@@ -1,0 +1,141 @@
+/* Gate Checklist tool: phase stepper (sub-navigation), gated checklist and print report.
+   Reuses the shared tokens/components (var(--*), .content, .btn, .seg) so it stays on-brand. */
+
+/* ---------- Top toolbar (overview + global actions) ---------- */
+.gc-topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.gc-overview{display:flex;flex-direction:column;gap:2px}
+.gc-overview strong{font-size:.95rem}
+.gc-overview-sub{font-size:.78rem;color:var(--text-3)}
+.gc-actions{display:flex;gap:8px;flex-wrap:wrap}
+.gc-actions .btn{width:auto}
+
+/* ---------- Sub-navigation: the phase stepper ---------- */
+.gc-steps{
+  display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;
+  scrollbar-width:thin;
+}
+.gc-step{
+  appearance:none;cursor:pointer;font:inherit;flex:none;
+  display:flex;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--border);border-radius:9px;
+  padding:9px 13px;color:var(--text-2);position:relative;
+}
+.gc-step:hover{border-color:var(--border-strong);color:var(--text)}
+.gc-step.active{border-color:var(--accent);color:var(--text);background:var(--accent-soft)}
+.gc-step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gc-step-num{
+  flex:none;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;
+  background:var(--bg);border:1px solid var(--border-strong);color:var(--text-2);
+}
+.gc-step.active .gc-step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.gc-step-name{font-size:.82rem;font-weight:600;white-space:nowrap}
+.gc-step-dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--border-strong)}
+.gc-step[data-status="ready"]  .gc-step-dot{background:#22a06b}
+.gc-step[data-status="blocked"] .gc-step-dot{background:#d99a06}
+.gc-step[data-status="closed"] .gc-step-dot{background:var(--accent)}
+/* A closed phase gets a check mark instead of its number. */
+.gc-step[data-status="closed"] .gc-step-num{background:var(--accent);border-color:var(--accent);color:#fff;font-size:0}
+.gc-step[data-status="closed"] .gc-step-num::after{content:"✓";font-size:.8rem}
+
+/* ---------- Phase panel ---------- */
+.gc-badge{
+  font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.04em;
+  padding:5px 10px;border-radius:6px;white-space:nowrap;
+  border:1px solid transparent;
+}
+.gc-badge.gc-ready  {background:rgba(34,160,107,.14);color:#1a865a;border-color:rgba(34,160,107,.35)}
+.gc-badge.gc-blocked{background:rgba(217,154,6,.14);color:#9a6d04;border-color:rgba(217,154,6,.35)}
+.gc-badge.gc-closed {background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+[data-theme="dark"] .gc-badge.gc-ready  {color:#5fd6a3}
+[data-theme="dark"] .gc-badge.gc-blocked{color:#e9bb54}
+
+.gc-groups{padding:8px 20px 4px}
+.gc-group{padding:14px 0;border-bottom:1px solid var(--border-soft)}
+.gc-group:last-child{border-bottom:none}
+.gc-group h4{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--text-3);margin-bottom:10px;
+}
+.gc-item{
+  display:flex;gap:11px;padding:8px 10px;border-radius:8px;cursor:pointer;align-items:flex-start;
+}
+.gc-item:hover{background:var(--surface-2)}
+.gc-item input{
+  flex:none;width:17px;height:17px;margin-top:2px;cursor:pointer;accent-color:var(--accent);
+}
+.gc-item-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gc-item-label{font-size:.88rem;color:var(--text);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gc-item input:checked ~ .gc-item-body .gc-item-label{color:var(--text-2);text-decoration:line-through;text-decoration-color:var(--text-3)}
+.gc-item-desc{font-size:.78rem;color:var(--text-3);line-height:1.45}
+.gc-req,.gc-rec{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.03em;
+  padding:1px 6px;border-radius:4px;text-transform:uppercase;flex:none;
+}
+.gc-req{background:rgba(217,154,6,.16);color:#9a6d04}
+.gc-rec{background:var(--surface-2);color:var(--text-3);border:1px solid var(--border)}
+[data-theme="dark"] .gc-req{color:#e9bb54}
+
+/* ---------- Gate panel (notes + close/reopen) ---------- */
+.gc-gate{padding:16px 20px 20px;border-top:1px solid var(--border);background:var(--surface-2)}
+.gc-warn{
+  font-size:.8rem;color:#9a6d04;background:rgba(217,154,6,.1);
+  border:1px solid rgba(217,154,6,.3);border-radius:8px;padding:9px 12px;margin-bottom:14px;line-height:1.45;
+}
+[data-theme="dark"] .gc-warn{color:#e9bb54}
+.gc-notes-label,.gc-close-label{
+  display:block;font-size:.75rem;font-weight:600;color:var(--text-2);margin-bottom:5px;
+}
+.gc-notes{
+  width:100%;font:inherit;font-size:.85rem;line-height:1.5;resize:vertical;
+  padding:9px 11px;border:1px solid var(--border-strong);border-radius:7px;
+  background:var(--surface);color:var(--text);margin-bottom:14px;
+}
+.gc-notes:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
+.gc-close{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.gc-close input{
+  flex:1;min-width:160px;font:inherit;font-size:.875rem;
+  padding:8px 10px;border:1px solid var(--border-strong);border-radius:6px;
+  background:var(--surface);color:var(--text);
+}
+.gc-close input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
+.gc-close .btn{width:auto;flex:none}
+.gc-closed{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.gc-closed-info{font-size:.85rem;color:var(--text-2)}
+.gc-closed .btn{width:auto}
+
+@media (max-width:900px){
+  .gc-close input{min-width:0;width:100%}
+  .gc-close .btn{width:100%}
+}
+
+/* ---------- Print report ---------- */
+#gc-print{display:none}
+@media print{
+  /* Hide the whole app and show only the generated report. */
+  body > *{display:none !important}
+  #gc-print{display:block !important;color:#000;font-family:var(--sans)}
+  #gc-print h1{font-size:20pt;margin:0 0 4pt}
+  #gc-print .gc-print-meta{font-size:9pt;color:#555;margin:0 0 16pt}
+  .gc-print-phase{break-inside:avoid;margin-bottom:16pt}
+  #gc-print h2{font-size:13pt;margin:0 0 3pt;border-bottom:1px solid #000;padding-bottom:3pt}
+  #gc-print .gc-print-status{font-size:8pt;font-weight:700;letter-spacing:.04em}
+  #gc-print .gc-print-status.gc-ready{color:#1a865a}
+  #gc-print .gc-print-status.gc-blocked{color:#9a6d04}
+  #gc-print .gc-print-status.gc-closed{color:#2b4bd7}
+  #gc-print .gc-print-closed{font-size:9pt;color:#333;margin:0 0 6pt}
+  #gc-print h3{font-size:10pt;margin:8pt 0 3pt;color:#333}
+  #gc-print ul.gc-print-items{list-style:none;margin:0;padding:0;font-size:9.5pt}
+  #gc-print .gc-print-items li{display:flex;gap:6pt;align-items:baseline;padding:1.5pt 0}
+  #gc-print .gc-print-box{
+    flex:none;width:11pt;height:11pt;border:1px solid #000;border-radius:2pt;
+    display:inline-flex;align-items:center;justify-content:center;font-size:8pt;
+  }
+  #gc-print .gc-print-items li.off{color:#777}
+  #gc-print .gc-print-notes{font-size:9pt;margin:6pt 0 0;padding:5pt 8pt;background:#f2f2f2;border-radius:3pt}
+  #gc-print em{color:#9a6d04;font-style:normal;font-size:8pt;font-weight:700}
+}

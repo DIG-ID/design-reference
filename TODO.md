@@ -8,8 +8,13 @@ Ideias para evoluir a ferramenta. Nada aqui é compromisso; é um backlog para e
 - [ ] **Radius scale** — escala de border-radius (none → pill).
 - [ ] **Breakpoints** — referência de breakpoints comuns com preview de largura.
 
+## Gate Checklist (evoluções)
+- [ ] **Multi-projeto** — criar/nomear/selecionar/eliminar projetos, cada um com o seu estado (hoje é uma run única global).
+- [ ] **Content por página** — a fase Content é "run per page"; permitir várias instâncias/páginas em vez de uma checklist única.
+- [ ] Modo estrito opcional (toggle) que bloqueia o fecho da fase até os obrigatórios passarem.
+
 ## Persistência e partilha
-- [ ] Guardar as definições de cada ferramenta em `localStorage` (sobreviver a refresh).
+- [ ] Guardar as definições de Spacing/Type em `localStorage` (sobreviver a refresh) — a Gate Checklist já persiste.
 - [ ] Codificar o estado no URL (`#`) para partilhar uma configuração exata sem servidor.
 - [ ] Botão "Reset" por ferramenta (voltar aos defaults).
 
