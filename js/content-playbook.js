@@ -25,7 +25,7 @@
    * `setup` is the project-level stage; STAGES are per page.
    * ============================================================ */
   var SETUP = {
-    id: 'setup', title: 'Project setup', short: 'Decide these once for the whole site — before any page is written.',
+    id: 'setup', scope: 'project', title: 'Project setup', short: 'Decide these once for the whole site — before any page is written.',
     guide: 'Before working on any page, settle the decisions that apply to the whole site. If they are not settled, every page reopens them and the tone drifts. As the content owner, record them in writing so they are not changed informally later.',
     why: 'Most content problems come from skipping this step: with no agreed sitemap, tone or formality decision, ten pages end up in ten voices and content arrives as scattered, unstructured fragments.',
     example: {
@@ -133,7 +133,7 @@
       deliverable: 'A defined primary CTA and next step for each page.'
     },
     {
-      id: 'legal', title: 'Legal & compliance (DACH)', short: 'What is legally required in DE/AT/CH.',
+      id: 'legal', scope: 'project', title: 'Legal & compliance (DACH)', short: 'Site-wide legal requirements in DE/AT/CH — checked once, not per page.',
       guide: 'Make sure the Impressum is present and correct, the privacy/cookie consent is aligned with no tags firing before consent, and the legal entity details are right. Clear image and font licensing, meet accessibility basics (increasingly a legal requirement in the EU), and keep pricing/offer claims accurate. When in doubt, raise it with whoever owns legal rather than guessing.',
       why: 'In the DACH region these are not optional; a missing Impressum or tracking that fires before consent is a real legal risk.',
       example: {
@@ -144,11 +144,9 @@
         { id: 'lg-impressum', label: 'Impressum / Imprint present and correct' },
         { id: 'lg-consent', label: 'Privacy + cookie consent aligned — no pre-consent firing', desc: 'Check the tag manager.' },
         { id: 'lg-entity', label: 'Correct legal entity, address, VAT/register info' },
-        { id: 'lg-licensing', label: 'Image & font licensing cleared' },
-        { id: 'lg-a11y', label: 'Accessibility basics met (alt text, contrast, real heading order)' },
-        { id: 'lg-claims', label: 'Pricing/offer claims accurate and not misleading' }
+        { id: 'lg-licensing', label: 'Image & font licensing cleared' }
       ],
-      deliverable: 'A short compliance note per page/site, with anything risky flagged to legal.'
+      deliverable: 'A short site-wide compliance note, with anything risky flagged to legal.'
     },
     {
       id: 'qa', title: 'QA & handoff', short: 'Finish cleanly and package the deliverables.',
@@ -164,6 +162,8 @@
         { id: 'qa-links', label: 'All links work; no orphan pages' },
         { id: 'qa-mobile', label: 'Reads well on mobile (line length, block size)' },
         { id: 'qa-format', label: 'Formatting consistent (capitalisation, punctuation, number/date per locale)' },
+        { id: 'qa-a11y', label: 'This page: accessibility basics (alt text, contrast, real heading order)' },
+        { id: 'qa-claims', label: 'This page: pricing/offer claims accurate and not misleading' },
         { id: 'qa-approved', label: 'Final Approver has signed off' }
       ],
       deliverable: 'The final content package: worksheet + approved copy + SEO fields + compliance note.'
@@ -200,16 +200,20 @@
   var ALL = [SETUP].concat(STAGES);
   function stageById(id){ return ALL.filter(function(s){ return s.id === id; })[0]; }
 
+  /* Two scopes: site-wide (checked once) vs per page. */
+  var PROJECT_STAGES = ALL.filter(function(s){ return s.scope === 'project'; });
+  var PAGE_STAGES    = ALL.filter(function(s){ return s.scope !== 'project'; });
+
   /* ============================================================
    * STATE + PERSISTENCE
    * state = {
-   *   setup: { checks:{} },
+   *   project: { checks:{} },                // site-wide stages (Setup, Legal)
    *   pages: [ { id, name, checks:{}, sheet:{} } ],
    *   current: pageId,
    *   stage: stageId
    * }
-   * Per-page stages read/write the current page's checks & sheet;
-   * the Setup stage reads/writes state.setup.
+   * Site-wide stages read/write state.project.checks; per-page stages
+   * read/write the current page's checks & sheet.
    * ============================================================ */
   var KEY = 'DR_playbook_v1';
   var seq = 1;
@@ -217,12 +221,13 @@
 
   function newPage(name){ return { id: 'p' + (seq++), name: name || ('Page ' + seq), checks:{}, sheet:{} }; }
   function load(){
-    var base = { setup:{checks:{}}, pages:[], current:null, stage:'setup' };
+    var base = { project:{checks:{}}, pages:[], current:null, stage:'setup' };
     try{
       var raw = localStorage.getItem(KEY);
       if(raw){
         var s = JSON.parse(raw);
-        base.setup = s.setup && s.setup.checks ? s.setup : {checks:{}};
+        // migrate older state that stored site-wide checks under `setup`
+        base.project = (s.project && s.project.checks) ? s.project : ((s.setup && s.setup.checks) ? s.setup : {checks:{}});
         base.pages = Array.isArray(s.pages) ? s.pages : [];
         base.stage = stageById(s.stage) ? s.stage : 'setup';
         base.current = s.current;
@@ -240,8 +245,8 @@
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 
   function currentPage(){ return state.pages.filter(function(p){ return p.id === state.current; })[0] || state.pages[0]; }
-  /* Where a stage's checks live: Setup is project-level, everything else is per page. */
-  function checksFor(stage){ return stage.id === 'setup' ? state.setup.checks : currentPage().checks; }
+  /* Where a stage's checks live: site-wide stages share state.project; per-page stages use the current page. */
+  function checksFor(stage){ return stage.scope === 'project' ? state.project.checks : currentPage().checks; }
   function stageDone(stage){
     var c = checksFor(stage);
     return stage.items.every(function(it){ return c[it.id]; });
@@ -266,23 +271,29 @@
       return '<option value="' + p.id + '"' + (p.id === state.current ? ' selected' : '') + '>' + escapeHtml(p.name) + '</option>';
     }).join('');
     // The page selector only applies to per-page stages.
-    var isSetup = state.stage === 'setup';
-    $('#cp-pagebar').classList.toggle('cp-dim', isSetup);
-    $('#cp-page').disabled = isSetup;
-    $('#cp-del').disabled = isSetup || state.pages.length <= 1;
+    var isProject = stageById(state.stage).scope === 'project';
+    $('#cp-pagebar').classList.toggle('cp-dim', isProject);
+    $('#cp-page').disabled = isProject;
+    $('#cp-del').disabled = isProject || state.pages.length <= 1;
   }
 
+  function stepButton(s, num){
+    var active = s.id === state.stage;
+    var done = stageDone(s);
+    return '<button class="gc-step' + (active ? ' active' : '') + '" data-stage="' + s.id + '"' +
+      ' role="tab" aria-selected="' + active + '" data-status="' + (done ? 'closed' : 'todo') + '">' +
+      '<span class="gc-step-num">' + num + '</span>' +
+      '<span class="gc-step-name">' + escapeHtml(s.title) + '</span>' +
+      '<span class="gc-step-dot" aria-hidden="true"></span>' +
+    '</button>';
+  }
+  /* Stepper grouped by scope: site-wide stages (checked once) then the per-page flow (1..n). */
   function renderSteps(){
-    $('#cp-steps').innerHTML = ALL.map(function(s, i){
-      var active = s.id === state.stage;
-      var done = stageDone(s);
-      return '<button class="gc-step' + (active ? ' active' : '') + '" data-stage="' + s.id + '"' +
-        ' role="tab" aria-selected="' + active + '" data-status="' + (done ? 'closed' : 'todo') + '">' +
-        '<span class="gc-step-num">' + (i === 0 ? '·' : i) + '</span>' +
-        '<span class="gc-step-name">' + escapeHtml(s.title) + '</span>' +
-        '<span class="gc-step-dot" aria-hidden="true"></span>' +
-      '</button>';
-    }).join('');
+    var html = '<span class="cp-steps-label">Site-wide · once</span>';
+    PROJECT_STAGES.forEach(function(s){ html += stepButton(s, '·'); });
+    html += '<span class="cp-steps-sep" aria-hidden="true"></span><span class="cp-steps-label">Per page</span>';
+    PAGE_STAGES.forEach(function(s, i){ html += stepButton(s, i + 1); });
+    $('#cp-steps').innerHTML = html;
   }
 
   function renderStage(){
@@ -356,6 +367,13 @@
     html += '<div class="cp-deliver"><span class="cp-deliver-tag">Hand off</span>' + escapeHtml(stage.deliverable) + '</div>';
 
     $('#cp-body').innerHTML = html;
+
+    /* The export buttons follow the current scope: page handoff vs project report. */
+    var proj = stage.scope === 'project';
+    $('#cp-print-btn').textContent = proj ? 'Print project' : 'Print handoff';
+    $('#cp-copy').textContent = proj ? 'Copy project' : 'Copy handoff';
+    $('#cp-print-btn').title = proj ? 'Print / PDF of the site-wide checklist (Setup + Legal)' : 'Print / PDF of this page’s handoff (worksheet + per-page checklist) — for your records';
+    $('#cp-copy').title = proj ? 'Copy the site-wide checklist as Markdown' : 'Copy this page’s handoff as Markdown — for your records';
   }
 
   function refreshProgress(){
@@ -382,7 +400,7 @@
     if(!name) return;
     var p = newPage(name);
     state.pages.push(p); state.current = p.id;
-    if(state.stage === 'setup') state.stage = 'prepare';
+    if(stageById(state.stage).scope === 'project') state.stage = 'prepare';
     save(); render();
   });
   $('#cp-del').addEventListener('click', function(){
@@ -416,26 +434,34 @@
   }
 
   /* ---------- export (Markdown + print) ---------- */
-  function pageReport(page){
-    var lines = ['# Content handoff — ' + page.name, '', '_Generated ' + new Date().toLocaleString() + '_', ''];
-    // worksheet
-    lines.push('## Worksheet');
-    SHEET_FIELDS.forEach(function(f){
-      lines.push('- **' + f.label + ':** ' + (page.sheet[f.id] || '—'));
-    });
-    lines.push('');
-    // per-stage checklists (page-level) + setup at the end
-    STAGES.forEach(function(s){
-      var pr = (function(){ var d = 0; s.items.forEach(function(it){ if(page.checks[it.id]) d++; }); return d; })();
-      lines.push('## ' + s.title + ' (' + pr + '/' + s.items.length + ')');
-      s.items.forEach(function(it){ lines.push('- [' + (page.checks[it.id] ? 'x' : ' ') + '] ' + it.label); });
+  /* Shared helpers: render a list of stages against a checks object. */
+  function stagesMd(stages, checks){
+    var lines = [];
+    stages.forEach(function(s){
+      var d = 0; s.items.forEach(function(it){ if(checks[it.id]) d++; });
+      lines.push('## ' + s.title + ' (' + d + '/' + s.items.length + ')');
+      s.items.forEach(function(it){ lines.push('- [' + (checks[it.id] ? 'x' : ' ') + '] ' + it.label); });
       lines.push('');
     });
-    lines.push('## Project setup');
-    SETUP.items.forEach(function(it){ lines.push('- [' + (state.setup.checks[it.id] ? 'x' : ' ') + '] ' + it.label); });
-    return lines.join('\n');
+    return lines;
+  }
+  function stagesHtml(stages, checks){
+    return stages.map(function(s){
+      return '<h2>' + escapeHtml(s.title) + '</h2><ul class="cp-print-items">' +
+        s.items.map(function(it){
+          var on = checks[it.id];
+          return '<li class="' + (on ? 'on' : 'off') + '"><span class="cp-print-box">' + (on ? '✔' : '') + '</span>' + escapeHtml(it.label) + '</li>';
+        }).join('') + '</ul>';
+    }).join('');
   }
 
+  /* Per-page handoff: worksheet + the per-page stages for that page (no site-wide checks). */
+  function pageReport(page){
+    var lines = ['# Content handoff — ' + page.name, '', '_Generated ' + new Date().toLocaleString() + '_', '', '## Worksheet'];
+    SHEET_FIELDS.forEach(function(f){ lines.push('- **' + f.label + ':** ' + (page.sheet[f.id] || '—')); });
+    lines.push('');
+    return lines.concat(stagesMd(PAGE_STAGES, page.checks)).join('\n');
+  }
   function pageReportHtml(page){
     var h = '<h1>Content handoff — ' + escapeHtml(page.name) + '</h1>' +
       '<p class="cp-print-meta">Generated ' + escapeHtml(new Date().toLocaleString()) + '</p>';
@@ -443,15 +469,18 @@
       SHEET_FIELDS.map(function(f){
         return '<tr><th>' + escapeHtml(f.label) + '</th><td>' + escapeHtml(page.sheet[f.id] || '—') + '</td></tr>';
       }).join('') + '</table>';
-    STAGES.concat([{ id:'setup', title:'Project setup', items:SETUP.items, _setup:true }]).forEach(function(s){
-      var checks = s._setup ? state.setup.checks : page.checks;
-      h += '<h2>' + escapeHtml(s.title) + '</h2><ul class="cp-print-items">' +
-        s.items.map(function(it){
-          var on = checks[it.id];
-          return '<li class="' + (on ? 'on' : 'off') + '"><span class="cp-print-box">' + (on ? '✔' : '') + '</span>' + escapeHtml(it.label) + '</li>';
-        }).join('') + '</ul>';
-    });
-    return h;
+    return h + stagesHtml(PAGE_STAGES, page.checks);
+  }
+
+  /* Site-wide report: the project-level stages (Setup + Legal), shared across all pages. */
+  function projectReport(){
+    var lines = ['# Project report', '', '_Generated ' + new Date().toLocaleString() + '_', '', '_Site-wide checks, shared across all pages._', ''];
+    return lines.concat(stagesMd(PROJECT_STAGES, state.project.checks)).join('\n');
+  }
+  function projectReportHtml(){
+    return '<h1>Project report</h1>' +
+      '<p class="cp-print-meta">Generated ' + escapeHtml(new Date().toLocaleString()) + ' — site-wide checks, shared across all pages</p>' +
+      stagesHtml(PROJECT_STAGES, state.project.checks);
   }
 
   /* Blank client-facing brief: one section per page, with instructions. */
@@ -472,14 +501,15 @@
   }
 
   $('#cp-copy').addEventListener('click', function(){
-    DR.openModal('Content handoff — ' + currentPage().name, pageReport(currentPage()));
+    if(stageById(state.stage).scope === 'project') DR.openModal('Project report — site-wide checks', projectReport());
+    else DR.openModal('Content handoff — ' + currentPage().name, pageReport(currentPage()));
   });
   $('#cp-brief').addEventListener('click', function(){
     DR.openModal('Client brief — send to the client (' + state.pages.length + ' page' + (state.pages.length === 1 ? '' : 's') + ')', clientBrief());
   });
   $('#cp-print-btn').addEventListener('click', function(){
     var gc = document.getElementById('gc-print'); if(gc) gc.innerHTML = ''; // avoid printing the other tool's stale report
-    $('#cp-print').innerHTML = pageReportHtml(currentPage());
+    $('#cp-print').innerHTML = stageById(state.stage).scope === 'project' ? projectReportHtml() : pageReportHtml(currentPage());
     window.print();
   });
 

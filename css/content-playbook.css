@@ -39,6 +39,14 @@
 [data-theme="dark"] .cp-bad .cp-ex-tag{color:#e9bb54}
 [data-theme="dark"] .cp-good .cp-ex-tag{color:#5fd6a3}
 
+/* ---------- Stepper group labels + divider (site-wide vs per page) ---------- */
+#cp-steps{align-items:center}
+.cp-steps-label{
+  flex:none;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--text-3);padding:0 4px;white-space:nowrap;
+}
+.cp-steps-sep{flex:none;width:1px;align-self:stretch;background:var(--border);margin:0 8px}
+
 /* ---------- Tips block (e.g. collecting content from the client) ---------- */
 .cp-tips{
   margin:8px 0 20px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);

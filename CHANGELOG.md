@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.5.0] - 2026-07-28
+
+### Changed
+- Content Playbook now separates **site-wide** stages (checked once — Project setup and Legal & compliance) from **per-page** stages (Prepare → QA), grouped and labelled in the stepper. This fixes the previous behaviour where site-wide items (e.g. Impressum) were tracked and printed per page.
+- The two genuinely per-page items from Legal (accessibility, accurate claims) moved into the per-page QA stage.
+- Exports now match the current scope: on a per-page stage, "Print/Copy handoff" outputs that page's worksheet + per-page checklist only; on a site-wide stage, "Print/Copy project" outputs the site-wide checklist. The page handoff no longer dumps the whole checklist into every page.
+- The page selector is disabled on site-wide stages.
+
 ## [2.4.2] - 2026-07-28
 
 ### Changed
