@@ -90,5 +90,7 @@
 .modal-box pre{
   overflow:auto;padding:16px 18px;font-family:var(--mono);font-size:.78rem;line-height:1.55;
   color:var(--text-2);flex:1;
+  /* wrap long lines (prose exports like the client brief) instead of scrolling off-screen */
+  white-space:pre-wrap;overflow-wrap:break-word;
 }
 .modal-foot{padding:12px 18px;border-top:1px solid var(--border)}
