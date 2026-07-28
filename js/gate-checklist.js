@@ -30,7 +30,7 @@
         { title: 'Roles & ownership', items: [
           { id: 'kickoff-owner',     label: 'Content Owner assigned', description: 'One person accountable for content arriving in the right shape, on time.', required: true },
           { id: 'kickoff-approver',  label: 'Approver assigned', description: 'One person who gives the final yes/no. Can be the same person as the owner, but the role must exist.', required: true },
-          { id: 'kickoff-raci',      label: 'Writer, reviewer and CMS-input roles defined', description: 'RACI-lite: who writes, who checks SEO/quality, who actually pastes into the CMS (not the client, freestyle).', required: false }
+          { id: 'kickoff-raci',      label: 'Writer, reviewer and content-input roles defined', description: 'RACI-lite: who writes, who checks SEO/quality, and who owns putting content into the build. The client sends content through the agreed channel (brief or document), not straight into the site.', required: false }
         ]},
         { title: 'Scope & contract', items: [
           { id: 'kickoff-scope',     label: 'Copywriting scope decided and in writing', description: 'We write / client writes to a brief / subcontracted — stated in the proposal with responsibilities and deadlines.', required: true },
@@ -125,7 +125,7 @@
           { id: 'dev-complete',       label: 'Development complete', required: true },
           { id: 'dev-responsive',     label: 'Responsive done (only after desktop was locked)', required: true },
           { id: 'dev-noadhoc',        label: 'No live ad-hoc content edits — changes batched as logged requests', description: 'Any change after content lock is a change request with a cost/time impact.', required: false },
-          { id: 'dev-cmsscope',       label: 'Client CMS access scoped (staging or specific fields only)', required: false }
+          { id: 'dev-cmsscope',       label: 'Client CMS access deferred to after go-live (scoped fields only)', description: 'During the build the client contributes through the agreed channel, not by editing the site directly.', required: false }
         ]}
       ]
     },

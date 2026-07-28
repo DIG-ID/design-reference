@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.2.1] - 2026-07-28
+
+### Changed
+- Reworded the content-intake references in the Gate Checklist and Content Playbook: the client contributes through an agreed channel (brief or document), and CMS editing is deferred to after go-live — instead of implying the client writes into the site during the project.
+
 ## [2.2.0] - 2026-07-28
 
 ### Added

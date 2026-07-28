@@ -27,10 +27,10 @@
   var SETUP = {
     id: 'setup', title: 'Project setup', short: 'Decide these once for the whole site — before any page is written.',
     guide: 'Before touching a single page, lock the decisions that apply to the entire site. If these aren’t settled, every page re-litigates them and the tone drifts. You are the owner here: get them in writing so the client and the team can’t quietly change them later.',
-    why: 'Most content chaos comes from skipping this: no agreed sitemap, no tone, no decision on formality — so ten pages end up in ten voices and the client free-writes into the CMS.',
+    why: 'Most content chaos comes from skipping this: no agreed sitemap, no tone, no decision on formality — so ten pages end up in ten voices and content arrives as scattered, unstructured fragments.',
     example: {
-      bad: '“We’ll figure out the tone as we go.” German pages mix formal *Sie* and casual *du*; the client pastes their own copy straight into the live CMS.',
-      good: 'One page of tone guide (“warm, concrete, second person; *Sie* across the whole DE site”), an agreed & signed sitemap, and a content brief template the client fills instead of free-writing.'
+      bad: '“We’ll figure out the tone as we go.” German pages mix formal *Sie* and casual *du*, and content trickles in through scattered emails, chat messages and half-finished documents.',
+      good: 'One page of tone guide (“warm, concrete, second person; *Sie* across the whole DE site”), an agreed & signed sitemap, and a content brief template the client fills in one place.'
     },
     items: [
       { id: 'set-scope', label: 'Copywriting scope is decided and in writing', desc: 'We write / client writes to a brief / subcontracted — with responsibilities and deadlines in the proposal.' },
@@ -80,7 +80,7 @@
         { id: 'wr-terms', label: 'Consistent terminology (decided once: rooms vs suites, guests vs visitors)' },
         { id: 'wr-open', label: 'Opening line earns the next — no throat-clearing intro' }
       ],
-      deliverable: 'Draft copy per page in the agreed submission format (doc/sheet, not the live CMS).'
+      deliverable: 'Draft copy per page in the agreed submission format — a shared document or the brief template, in one place rather than scattered across emails and chats.'
     },
     {
       id: 'seo', title: 'SEO', short: 'Make it findable without stuffing.',
