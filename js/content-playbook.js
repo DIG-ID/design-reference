@@ -38,9 +38,20 @@
       { id: 'set-tone', label: 'A tone guide exists (even one page)', desc: 'Voice, do’s and don’ts, a couple of on-brand sentences.' },
       { id: 'set-formality', label: 'Formality decided per language (Sie vs du) and written down', desc: 'In German this is a brand decision applied consistently across the whole site.' },
       { id: 'set-revisions', label: 'Number of revision rounds capped and stated' },
-      { id: 'set-brief', label: 'Content brief template ready for the client', desc: 'Per page: goal, audience, key message, must-include facts, word-count range — never a blank page.' }
+      { id: 'set-brief', label: 'Content brief sent to the client (use the "Client brief" export)', desc: 'Per page: goal, audience, key message, must-include facts — never a blank page.' },
+      { id: 'set-intake', label: 'Client briefed to send facts and bullet points, not finished copy' },
+      { id: 'set-assets', label: 'Existing material gathered (current site, brochures, Figma text, photos)' }
     ],
-    deliverable: 'A short tone guide, a signed sitemap, and (if the client writes) a filled brief template.'
+    /* Practical guidance on collecting content from the client with the least friction. */
+    tips: [
+      'Ask for facts and bullet points, not finished copy — you distil and write. The client knows the business; the words are your job.',
+      'Never hand over a blank page. Send the "Client brief" export from this tool: one structured document, one section per page.',
+      'Collect in one place, not scattered across emails and chat messages.',
+      'Reuse what already exists — current site, brochures, Figma text — and mine it yourself instead of asking the client to rewrite.',
+      'Include one filled example page so the client sees the shape expected.',
+      'Set a deadline per batch and cap the revision rounds up front.'
+    ],
+    deliverable: 'A short tone guide, a signed sitemap, and the client brief sent (with a filled example).'
   };
 
   var STAGES = [
@@ -174,6 +185,18 @@
     { id: 'approved', label: 'Approved by' }
   ];
 
+  /* Client-facing brief: a client-appropriate subset (NOT our SEO worksheet), with hints.
+     Exported blank, one section per page, ready to send. */
+  var CLIENT_BRIEF_FIELDS = [
+    { label: 'Goal', hint: 'What should this page achieve? (inform / convert / rank)' },
+    { label: 'Who it’s for', hint: 'The main audience for the page' },
+    { label: 'Key message', hint: 'In one or two sentences, what must the visitor take away?' },
+    { label: 'Must-include facts', hint: 'Prices, features, addresses, opening hours, figures — as bullet points' },
+    { label: 'Primary action', hint: 'What should the visitor do next? (Book, Call, Request an offer…)' },
+    { label: 'Existing material to reuse', hint: 'Links or files: current site, brochures, Figma text, photos' },
+    { label: 'Anything to avoid', hint: 'Wording, claims or topics that are off-limits' }
+  ];
+
   var ALL = [SETUP].concat(STAGES);
   function stageById(id){ return ALL.filter(function(s){ return s.id === id; })[0]; }
 
@@ -286,6 +309,13 @@
         '<div class="cp-ex cp-bad"><span class="cp-ex-tag">Weak</span><p>' + escapeHtml(stage.example.bad) + '</p></div>' +
         '<div class="cp-ex cp-good"><span class="cp-ex-tag">Better</span><p>' + escapeHtml(stage.example.good) + '</p></div>' +
       '</div>';
+    }
+
+    /* Practical tips (e.g. collecting content from the client) */
+    if(stage.tips){
+      html += '<div class="cp-tips"><h4>Getting content from the client</h4><ul>' +
+        stage.tips.map(function(t){ return '<li>' + escapeHtml(t) + '</li>'; }).join('') +
+      '</ul></div>';
     }
 
     /* Per-page worksheet (Prepare stage only) */
@@ -424,8 +454,28 @@
     return h;
   }
 
+  /* Blank client-facing brief: one section per page, with instructions. */
+  function clientBrief(){
+    var lines = [
+      '# Content brief',
+      '',
+      'Please fill in one section per page below. Send us **facts and bullet points, not finished copy** — we write it for you. Reuse anything you already have (current website, brochures, Figma text, photos) and just point us to it. Keep everything in this one document.',
+      ''
+    ];
+    state.pages.forEach(function(p){
+      lines.push('## Page: ' + p.name, '');
+      CLIENT_BRIEF_FIELDS.forEach(function(f){
+        lines.push('**' + f.label + '** — _' + f.hint + '_', '', '- ', '');
+      });
+    });
+    return lines.join('\n');
+  }
+
   $('#cp-copy').addEventListener('click', function(){
     DR.openModal('Content handoff — ' + currentPage().name, pageReport(currentPage()));
+  });
+  $('#cp-brief').addEventListener('click', function(){
+    DR.openModal('Client brief — send to the client (' + state.pages.length + ' page' + (state.pages.length === 1 ? '' : 's') + ')', clientBrief());
   });
   $('#cp-print-btn').addEventListener('click', function(){
     var gc = document.getElementById('gc-print'); if(gc) gc.innerHTML = ''; // avoid printing the other tool's stale report

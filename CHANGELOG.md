@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - **MINOR** (`1.0.0` → `1.1.0`) — new features / implementations (new tab, new tool, new section).
 - **PATCH** (`1.0.0` → `1.0.1`) — bug fixes and small adjustments that do not add functionality.
 
+## [2.3.0] - 2026-07-28
+
+### Added
+- Content Playbook — **Client brief** export: a blank, client-facing brief (one section per page, with instructions) that asks for facts and bullet points rather than finished copy, ready to send to the client.
+- Content Playbook — **content-intake guidance** in the Setup stage: a "Getting content from the client" tips block plus checklist items for briefing the client and gathering existing material.
+
 ## [2.2.1] - 2026-07-28
 
 ### Changed

@@ -4,7 +4,7 @@ Ferramenta offline (modular, sem build) com quatro tabs:
 1. **Spacing Grid** — escala de espaçamento 4pt/8pt com px/rem/pt, copy-on-click, export CSS vars
 2. **Type Scale** — gerador de escala tipográfica (ratio, base size, REM/PX/PT), estilo typescale.com
 3. **Gate Checklist** — checklist gated para projetos web (visão PM/team); sub-navegação por fases (Kickoff → Go-live), gates informativos (BLOCKED/READY), fechar/reabrir fase com registo, notas, estado em localStorage, export Markdown + print.
-4. **Content Playbook** — guia pessoal do-e-entrega para quem é responsável pelo conteúdo (content lead/copywriter, mesmo sem ser do ofício). Setup do projeto + fases por página (Prepare → QA); cada passo tem guia ("what good looks like" + porquê), exemplo bom/mau, checklist e deliverable. Worksheet por página (Part C) preenchível, múltiplas páginas, export Markdown + print.
+4. **Content Playbook** — guia pessoal do-e-entrega para quem é responsável pelo conteúdo (content lead/copywriter, mesmo sem ser do ofício). Setup do projeto (inclui guidance de content-intake do cliente) + fases por página (Prepare → QA); cada passo tem guia ("what good looks like" + porquê), exemplo bom/mau, checklist e deliverable. Worksheet por página (Part C) preenchível, múltiplas páginas. Exports: handoff da página (Markdown + print) e "Client brief" (template em branco para enviar ao cliente).
 
 As tabs 3 e 4 partilham conteúdo com origem em `website-content-checklist.md`.
 
